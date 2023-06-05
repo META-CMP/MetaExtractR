@@ -20,10 +20,10 @@
 #' @examples
 #' create_json_file(key = "J4L4L3", rid = "fp")
 #'
-#' @import openxlsx read.xlsx
-#' @import janitor clean_names
-#' @import jsonlite prettify
-#' @import jsonlite toJSON
+#' @importFrom openxlsx read.xlsx
+#' @importFrom janitor clean_names
+#' @importFrom jsonlite prettify
+#' @importFrom jsonlite toJSON
 #' @importFrom here here
 #'
 #' @export
