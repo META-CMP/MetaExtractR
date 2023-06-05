@@ -1,0 +1,10 @@
+Package: MetaExtractR
+Version: 0.1.0
+Date: 2023-06-05
+Title: Meta Study Data Extraction Management
+Description: Functions for data extraction management for our meta study.
+Author: Franz Prante <franz.prante@wiwi.tu-chemnitz.de>
+Maintainer: Franz Prante <franz.prante@wiwi.tu-chemnitz.de>
+RoxygenNote: 7.2.3
+License: MIT + file LICENSE
+Imports: here, janitor, jsonlite, openxlsx
