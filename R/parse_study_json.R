@@ -23,7 +23,11 @@
 #' @importFrom utils View
 #' 
 #' @examples 
-#' parse_study_json(json_file = "dev.json", json_path = json_path, codebook = codebook, view_data = T)
+#' parse_study_json(
+#'  json_file = "dev_filled.json", 
+#'  json_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", 
+#'  codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.xlsx", 
+#'  view_data = FALSE)
 #'
 #' @export
 parse_study_json <- 
@@ -31,7 +35,7 @@ parse_study_json <-
     json_file,
     json_path,
     codebook = "codebook.xlsx",
-    view_data = T
+    view_data = TRUE
   ) {
     
     # Import the JSON file into R
@@ -41,7 +45,7 @@ parse_study_json <-
     # Import and test the codebook
     codebook <- openxlsx::read.xlsx(here::here(codebook))
     # Exclude variables that are not relevant for the JSON file
-    codebook <- codebook[codebook$json == T,]
+    codebook <- codebook[codebook$json == TRUE,]
     # Lower case variable names
     codebook <- janitor::clean_names(codebook)
     for (i in c("category", "variable")) {
@@ -108,7 +112,7 @@ parse_study_json <-
     # Replace "null" values with NA
     study_df[study_df == "null"] <- NA
     # Optionally view the data frame
-    if (view_data == T) {
+    if (view_data == TRUE) {
       View(study_df)
     }
     study_df
@@ -118,5 +122,5 @@ parse_study_json <-
 #   json_file = "dev.json",
 #   json_path = json_path,
 #   codebook = codebook,
-#   view_data = T
+#   view_data = TRUE
 # )

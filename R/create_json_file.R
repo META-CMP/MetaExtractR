@@ -18,13 +18,18 @@
 #' researcher ID to the generated JSON file.
 #'
 #' @examples
-#' create_json_file(key = "dev", rid = "fp", folder_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.xlsx")
+#' create_json_file(
+#'  key = "dev", 
+#'  rid = "fp", 
+#'  folder_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", 
+#'  codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.xlsx")
 #'
 #' @importFrom openxlsx read.xlsx
 #' @importFrom janitor clean_names
 #' @importFrom jsonlite prettify
 #' @importFrom jsonlite toJSON
 #' @importFrom here here
+#' @importFrom utils file.edit
 #'
 #' @export
 create_json_file <- 
