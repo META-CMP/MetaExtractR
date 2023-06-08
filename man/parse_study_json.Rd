@@ -8,7 +8,7 @@ parse_study_json(
   json_file,
   json_path,
   codebook = "codebook.xlsx",
-  view_data = T
+  view_data = TRUE
 )
 }
 \arguments{
@@ -34,6 +34,10 @@ encounters inconsistencies between the JSON data and the codebook, or
 inconsistencies in the number of models per variable in the JSON data.
 }
 \examples{
-# parse_study_json("study_data.json", "/path/to/study_data", "/path/to/codebook_file.xlsx", T)
+parse_study_json(
+ json_file = "dev_filled.json", 
+ json_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", 
+ codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.xlsx", 
+ view_data = FALSE)
 
 }

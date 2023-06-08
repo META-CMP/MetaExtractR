@@ -12,19 +12,24 @@
 #' checks for uniqueness of variable names, and converts the variable names 
 #' to lowercase. It then creates a JSON file with variable categories as the 
 #' main keys and variable names as subkeys, assigning NA values to each variable.
-#' Additionally, it adds the study key and researcher ID to the generated JSON file, 
-#' as well as placeholder options for categorical variables. Please note that the 
-#' placeholder options are a temporary workaround until they can be listed in 
-#' the codebook itself.
+#' For variables that are indicated as "factor" in the codebook (in column "Type"),
+#' the function automatically sets the variable's value to the options in the 
+#' codebook (in column "Entries"). Additionally, it adds the study key and 
+#' researcher ID to the generated JSON file.
 #'
 #' @examples
-#' create_json_file(key = "J4L4L3", rid = "fp")
+#' create_json_file(
+#'  key = "dev", 
+#'  rid = "fp", 
+#'  folder_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", 
+#'  codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.xlsx")
 #'
 #' @importFrom openxlsx read.xlsx
 #' @importFrom janitor clean_names
 #' @importFrom jsonlite prettify
 #' @importFrom jsonlite toJSON
 #' @importFrom here here
+#' @importFrom utils file.edit
 #'
 #' @export
 create_json_file <- 
@@ -42,6 +47,8 @@ create_json_file <-
     
     # Import the codebook
     codebook <- openxlsx::read.xlsx(here::here(codebook))
+    # Exclude variables that are not needed for the JSON file
+    codebook <- codebook[codebook$json == T,]
     # Test uniqueness of variable names in codebook
     if (length(unique(codebook$variable)) != length(codebook$variable)) {
       stop("Variables names in codebook are not unique.")
@@ -51,8 +58,6 @@ create_json_file <-
     for (i in c("category", "variable")) {
       codebook[[i]] <- tolower(codebook[[i]])
     }
-    
-    # ADD Step to filter out variables that we do not need in the JSON (e.g. external controls)
     
     df <- codebook
   
@@ -71,9 +76,15 @@ create_json_file <-
       for (i in 1:nrow(category_df)) {
         # Get the variable for the current row
         variable <- category_df$variable[i]
+        # If factor variable, get the value options, else NA
+        if (category_df$type[i] == "factor") {
+          value <- category_df$entries[i]
+        } else {
+          value <- NA
+        }
   
-        # Add the variable and assign NA value to the sublist
-        sublist[[variable]] <- NA
+        # Add the variable and assign factor options or NA value to the sublist
+        sublist[[variable]] <- value
       }
       
       # Add the sublist to the main list
@@ -83,10 +94,7 @@ create_json_file <-
     # Add key and rid1
     data$general$key <- key
     data$general$rid1 <- rid
-    
-    # Add placeholder options for categorical variables
-    # TO DO: This is only a workaround for now. Eventually, we want these options to be listed in the codebook and categorical variables marked and then automatically create these entries.
-    data$impulse_and_response_variables$dep <- "rGDP employ ..."
+    data$general$rid2 <- "null"
     
     # Create the JSON string
     json_data <- jsonlite::prettify(
@@ -98,17 +106,9 @@ create_json_file <-
     
     # Print success message
     cat("JSON file", paste0(key, ".json"), "has been created.")
+    
+    # Open the JSON file for editing
+    file.edit(file_path)
     }
 
-# create_json_file(key = "cat_test", rid = "fp", codebook = "codebook.xlsx")
-
-
-# We also need a function that edits or deletes or transforms a specifc key, maybe also value, for all existing JSON files (e.g. change of variable name) (maybe simply gsub ...)
-
-# When filled out for a study, the JSON file can be imported back into R and tested on consistency and then the study dataframe (containing all model specifications) can be created.
-
-# The study dataframe then needs to be connected to the IRF values
-
-# Think about how best to correct values in double checking (again nested? or arrays?)
-
-# We should also create some convienience functions for data exploring, for example, to quickly build the dataframe for some studies, based on titles or keys or so. Also to only select few variables.
+# create_json_file(key = "dev", rid = "fp", codebook = codebook, folder_path = folder_path)

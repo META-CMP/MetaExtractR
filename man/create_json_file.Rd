@@ -29,12 +29,16 @@ This function reads the codebook from the specified Excel file,
 checks for uniqueness of variable names, and converts the variable names 
 to lowercase. It then creates a JSON file with variable categories as the 
 main keys and variable names as subkeys, assigning NA values to each variable.
-Additionally, it adds the study key and researcher ID to the generated JSON file, 
-as well as placeholder options for categorical variables. Please note that the 
-placeholder options are a temporary workaround until they can be listed in 
-the codebook itself.
+For variables that are indicated as "factor" in the codebook (in column "Type"),
+the function automatically sets the variable's value to the options in the 
+codebook (in column "Entries"). Additionally, it adds the study key and 
+researcher ID to the generated JSON file.
 }
 \examples{
-create_json_file(key = "J4L4L3", rid = "fp")
+create_json_file(
+ key = "dev", 
+ rid = "fp", 
+ folder_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", 
+ codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.xlsx")
 
 }
