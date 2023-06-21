@@ -8,7 +8,7 @@
 #'
 #' @param json_file The name of the JSON file to be parsed.
 #' @param json_path The path to the JSON file to be parsed.
-#' @param codebook The path to the codebook file, with default value 'codebook.xlsx'.
+#' @param codebook The path to the codebook csv file, with default value 'codebook.csv'.
 #' @param view_data Logical indicating whether to view the resulting dataframe, with default TRUE.
 #'
 #' @return The function returns a dataframe with study data. Variables in the dataframe 
@@ -18,7 +18,7 @@
 #'
 #' @importFrom here here
 #' @importFrom jsonlite fromJSON
-#' @importFrom openxlsx read.xlsx
+#' @importFrom utils read.csv
 #' @importFrom janitor clean_names
 #' @importFrom utils View
 #' 
@@ -34,7 +34,7 @@ parse_study_json <-
   function (
     json_file,
     json_path,
-    codebook = "codebook.xlsx",
+    codebook = "codebook.csv",
     view_data = TRUE
   ) {
     
@@ -43,7 +43,7 @@ parse_study_json <-
     data <- jsonlite::fromJSON(file)
     
     # Import and test the codebook
-    codebook <- openxlsx::read.xlsx(here::here(codebook))
+    codebook <- read.csv(here::here(codebook))
     # Exclude variables that are not relevant for the JSON file
     codebook <- codebook[codebook$json == TRUE,]
     # Lower case variable names
