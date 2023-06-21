@@ -7,7 +7,7 @@
 create_json_file(
   key,
   rid,
-  codebook = "codebook.xlsx",
+  codebook = "codebook.csv",
   folder_path = "data/JSON_files"
 )
 }
@@ -16,7 +16,7 @@ create_json_file(
 
 \item{rid}{Researcher ID (character): A unique identifier for the researcher.}
 
-\item{codebook}{File path (character, default = "codebook.xlsx"): The path to the codebook file in Excel format (.xlsx).}
+\item{codebook}{File path (character, default = "codebook.csv"): The path to the codebook file in csv format.}
 
 \item{folder_path}{Folder path (character, default = "data/JSON_files"): The folder path where the JSON file will be saved.}
 }
@@ -25,13 +25,13 @@ This function generates a JSON file based on a codebook with variable
 names and variable categories, a study key, and a researcher ID.
 }
 \details{
-This function reads the codebook from the specified Excel file, 
-checks for uniqueness of variable names, and converts the variable names 
-to lowercase. It then creates a JSON file with variable categories as the 
+This function reads the codebook from the specified csv file, 
+converts the variable names to lowercase and checks for uniqueness of 
+variable names. It then creates a JSON file with variable categories as the 
 main keys and variable names as subkeys, assigning NA values to each variable.
-For variables that are indicated as "factor" in the codebook (in column "Type"),
+For variables that are indicated as "factor" in the codebook (in column "type"),
 the function automatically sets the variable's value to the options in the 
-codebook (in column "Entries"). Additionally, it adds the study key and 
+codebook (in column "entries"). Additionally, it adds the study key and 
 researcher ID to the generated JSON file.
 }
 \examples{
@@ -39,6 +39,6 @@ create_json_file(
  key = "dev", 
  rid = "fp", 
  folder_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", 
- codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.xlsx")
+ codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.csv")
 
 }

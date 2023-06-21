@@ -7,7 +7,7 @@
 parse_study_json(
   json_file,
   json_path,
-  codebook = "codebook.xlsx",
+  codebook = "codebook.csv",
   view_data = TRUE
 )
 }
@@ -16,7 +16,7 @@ parse_study_json(
 
 \item{json_path}{The path to the JSON file to be parsed.}
 
-\item{codebook}{The path to the codebook file, with default value 'codebook.xlsx'.}
+\item{codebook}{The path to the codebook csv file, with default value 'codebook.csv'.}
 
 \item{view_data}{Logical indicating whether to view the resulting dataframe, with default TRUE.}
 }
@@ -37,7 +37,7 @@ inconsistencies in the number of models per variable in the JSON data.
 parse_study_json(
  json_file = "dev_filled.json", 
  json_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", 
- codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.xlsx", 
+ codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.csv", 
  view_data = FALSE)
 
 }
