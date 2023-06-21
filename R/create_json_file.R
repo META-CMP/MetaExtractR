@@ -35,7 +35,7 @@
 create_json_file <- 
   function(key,
            rid, 
-           codebook = "codebook.xlsx",
+           codebook = "codebook.csv",
            folder_path = "data/JSON_files"
            ) {
     file_path = here::here(folder_path, paste0(key, ".json"))
@@ -46,19 +46,20 @@ create_json_file <-
     }
     
     # Import the codebook
-    codebook <- openxlsx::read.xlsx(here::here(codebook))
+    codebook <- read.csv(here::here(codebook))
     # Exclude variables that are not needed for the JSON file
     codebook <- codebook[codebook$json == T,]
-    # Test uniqueness of variable names in codebook
-    if (length(unique(codebook$variable)) != length(codebook$variable)) {
-      stop("Variables names in codebook are not unique.")
-    }
     # Lower case variable names
     codebook <- janitor::clean_names(codebook)
     for (i in c("category", "variable")) {
       codebook[[i]] <- tolower(codebook[[i]])
     }
-    
+
+    # Test uniqueness of variable names in codebook
+    if (length(unique(codebook$variable)) != length(codebook$variable)) {
+      stop("Variables names in codebook are not unique.")
+    }    
+        
     df <- codebook
   
     # Initialize an empty list
