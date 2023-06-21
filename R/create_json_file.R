@@ -22,7 +22,7 @@
 #'  key = "dev", 
 #'  rid = "fp", 
 #'  folder_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", 
-#'  codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.xlsx")
+#'  codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.csv")
 #'
 #' @importFrom janitor clean_names
 #' @importFrom jsonlite prettify
