@@ -35,7 +35,8 @@ parse_study_json <-
     json_file,
     json_path,
     codebook = "codebook.csv",
-    view_data = TRUE
+    view_data = TRUE,
+    ignore_failed_tests = FALSE
   ) {
     
     # Import the JSON file into R
@@ -56,7 +57,12 @@ parse_study_json <-
     # Check: Correct variable categories in JSON data?
     variable_categories <- unique(codebook$category)
     if (all(names(data) == variable_categories) != TRUE) {
-      stop("Corrupted variable category names in JSON data. Check for typos. Variable categories should align with the codebook.")
+      message <- "Corrupted variable category names in JSON data. Check for typos. Variable categories should align with the codebook."
+      if (ignore_failed_tests == FALSE) {
+        stop(message)
+      } else if (ignore_failed_tests == TRUE) {
+        message(message)
+      }
     }
     # Check: Correct variable names in JSON data?
     variable_names <- list()
@@ -71,13 +77,17 @@ parse_study_json <-
         print(names(data[[category]]))
         message("Variables of ", category, " in codebook:")
         print(variable_names[[category]])
-        stop("Aborting.")
+        if (ignore_failed_tests == FALSE) {
+          stop("Aborting.")
+        }
       } else if (all(names(data[[category]]) == variable_names[[category]]) != TRUE) {
         error_vars <- names(data[[category]]) != variable_names[[category]]
         error_vars <- names( data[[category]][error_vars] )
         message("Check these variable names for typos or obsolete entries:")
         print(error_vars)
-        stop("Corrupted variable names in JSON data.")
+        if (ignore_failed_tests == FALSE) {
+          stop("Corrupted variable names in JSON data.")
+        }
       }
     }
     
@@ -106,7 +116,12 @@ parse_study_json <-
           variable_data <- section_data[[variable]] # Select the variable
           if (all(names(variable_data) == paste0("model_", 1:num_models)) == FALSE) { # Test if numbers of models do not correspond for each variable.
             rm(study_df)
-            stop("Inconsistency in number of models or model_id in JSON data.")
+            message <- "Inconsistency in number of models or model_id in JSON data."
+            if (ignore_failed_tests == FALSE) {
+              stop(message)
+            } else if (ignore_failed_tests == TRUE) {
+                message(message)
+              } 
           }
           if (length(variable_data) > 1) {
             study_df[[variable]][model_id] <- variable_data[[model_id]] # Select the model specific value
