@@ -67,6 +67,11 @@ parse_study_json <-
       if (length(names(data[[category]])) != length(variable_names[[category]])) {
         message("Number of variables of JSON file does not equal number of variables in codebook for the following category: ", category)
         message("Check if some variables defined in the codebook are missing in the JSON file or if there are obsolete variables in the JSON file.")
+        message("Variables of ", category, " in JSON:")
+        print(names(data[[category]]))
+        message("Variables of ", category, " in codebook:")
+        print(variable_names[[category]])
+        stop("Aborting.")
       } else if (all(names(data[[category]]) == variable_names[[category]]) != TRUE) {
         error_vars <- names(data[[category]]) != variable_names[[category]]
         error_vars <- names( data[[category]][error_vars] )
