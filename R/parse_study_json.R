@@ -64,10 +64,13 @@ parse_study_json <-
       variable_names[[category]] <- codebook[codebook$category == category,"variable"]
     }
     for (category in variable_categories) {
-      if (all(names(data[[category]]) == variable_names[[category]]) != TRUE) {
+      if (length(names(data[[category]])) != length(variable_names[[category]])) {
+        message("Number of variables of JSON file does not equal number of variables in codebook for the following category: ", category)
+        message("Check if some variables defined in the codebook are missing in the JSON file or if there are obsolete variables in the JSON file.")
+      } else if (all(names(data[[category]]) == variable_names[[category]]) != TRUE) {
         error_vars <- names(data[[category]]) != variable_names[[category]]
         error_vars <- names( data[[category]][error_vars] )
-        message("Check these variable names for typos:")
+        message("Check these variable names for typos or obsolete entries:")
         print(error_vars)
         stop("Corrupted variable names in JSON data.")
       }
@@ -115,6 +118,7 @@ parse_study_json <-
     if (view_data == TRUE) {
       View(study_df)
     }
+    message("Done. Consistency tests verified.")
     study_df
   }
 
