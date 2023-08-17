@@ -8,8 +8,12 @@
 #'
 #' @param json_file The name of the JSON file to be parsed.
 #' @param json_path The path to the JSON file to be parsed.
-#' @param codebook The path to the codebook csv file, with default value 'codebook.csv'.
-#' @param view_data Logical indicating whether to view the resulting dataframe, with default TRUE.
+#' @param codebook The path to the codebook csv file, with default value 
+#'  'codebook.csv'.
+#' @param view_data Logical indicating whether to view the resulting dataframe, 
+#'  with default TRUE.
+#' @param ignore_failed_tests A logical. If TRUE, the function will parse the 
+#'  JSON despite failing consistency tests.
 #'
 #' @return The function returns a dataframe with study data. Variables in the dataframe 
 #'    correspond to variables in the JSON file and align with the codebook. Each row 
@@ -25,9 +29,10 @@
 #' @examples 
 #' parse_study_json(
 #'  json_file = "dev_filled.json", 
-#'  json_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", 
-#'  codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.csv", 
-#'  view_data = FALSE)
+#'  json_path = "/Users/franzprante/GitHub/MORPEP/META_CMP/toy_data_extraction_dev/data/JSON_files", 
+#'  codebook = "/Users/franzprante/GitHub/MORPEP/META_CMP/data/codebook.csv", 
+#'  view_data = FALSE,
+#'  ignore_failed_tests = FALSE)
 #'
 #' @export
 parse_study_json <- 
@@ -91,8 +96,6 @@ parse_study_json <-
       }
     }
     
-    # TO DO ADD: Transformations
-    
     # Determine the number of models in the study data.
     number_of_models <- function (data) {
       var_lengths <- unlist(lapply(data, lengths))
@@ -142,9 +145,3 @@ parse_study_json <-
     study_df
   }
 
-# parse_study_json(
-#   json_file = "dev.json",
-#   json_path = json_path,
-#   codebook = codebook,
-#   view_data = TRUE
-# )
