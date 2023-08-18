@@ -33,6 +33,9 @@ get_conf_level <- function (d) {
     
   }
   
+  # Decimal scaling
+  conf_level <- conf_level / 100
+  
   return(conf_level)
   
 }
