@@ -26,32 +26,36 @@ get_effect_trans_function <- function (d) {
   if (grepl("log_", dep_code) & grepl("lev_", shock_code) & cum == FALSE) {
     
     # If case 1: Log-level of response variable and level of shock variable, non-cumulative
-    trans_function <- function (x) x / shock_size * 100 # case 1 function
-    se_function <- function (x) x # PLACEHOLDER TO DO: replace with case 1 SE function 
+    trans_function <- function (x, shock_size) x / shock_size * 100 # case 1 function
+    se_up_function <- function (mean, up, crit_val) abs(up - mean) / crit_val
+    se_low_function <- function (mean, low, crit_val) abs(low - mean) / crit_val
     
   } else if (grepl("gr_", dep_code) & grepl("lev_", shock_code) & cum == FALSE) {
     
     # If case 2: Growth rate of response variable and level of shock variable, non-cumulative
-    trans_function <- function (x) x # PLACEHOLDER TO DO: replace with case 2 function
-    se_function <- function (x) x # PLACEHOLDER TO DO: replace with case 2 SE function 
-
+    trans_function <- function (x, shock_size) x # PLACEHOLDER TO DO: replace with case 2 function
+    se_up_function <- function (mean, up, crit_val) x # PLACEHOLDER TO DO: replace with case 2 SE function 
+    se_low_function <- function (mean, low, crit_val) x # PLACEHOLDER TO DO: replace with case 2 SE function 
+    
   } else if (grepl("logdiff_", dep_code) & grepl("lev_", shock_code)  & cum == FALSE) {
     
     # If case 3: Log-difference of response variable and level of shock variable, non-cumulative
-    trans_function <- function (x) x # PLACEHOLDER TO DO: replace with case 3 function 
-    se_function <- function (x) x # PLACEHOLDER TO DO: replace with case 3 SE function 
+    trans_function <- function (x, shock_size) x # PLACEHOLDER TO DO: replace with case 3 function 
+    se_up_function <- function (mean, up, crit_val) x # PLACEHOLDER TO DO: replace with case 3 SE function 
+    se_low_function <- function (mean, low, crit_val) x # PLACEHOLDER TO DO: replace with case 3 SE function 
     
   } else if (grepl("logdiff_", dep_code) | grepl("gr_", dep_code) & grepl("lev_", shock_code)  & cum == TRUE) {
     
     # If case 5: Log-difference or growth rate of response variable and level of shock variable, cumulative
-    trans_function <- function (x) x # PLACEHOLDER TO DO: replace with case 5 function 
-    se_function <- function (x) x # PLACEHOLDER TO DO: replace with case 5 SE function 
-    
+    trans_function <- function (x, shock_size) x # PLACEHOLDER TO DO: replace with case 5 function 
+    se_up_function <- function (mean, up, crit_val) x # PLACEHOLDER TO DO: replace with case 5 SE function 
+    se_low_function <- function (mean, low, crit_val) x # PLACEHOLDER TO DO: replace with case 5 SE function 
   }
   
   l <- list(
     "trans_function" = trans_function,
-    "se_function" = se_function
+    "se_up_function" = se_up_function,
+    "se_low_function" = se_low_function
     )
   
   return(l)
