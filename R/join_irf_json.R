@@ -27,7 +27,7 @@
 #'   irf_folder_path = "/Users/franzprante/GitHub/MORPEP/META_CMP/toy_data_extraction_dev/data/effect_sizes/IRFs/",
 #'   ignore_failed_tests = FALSE)
 join_irf_json <- function(key,
-                          jsonpath = "data/JSON_files",
+                          jsonpath = "data/full_text_screening/JSON_files",
                           codebook_file = "codebook.csv",
                           irf_folder_path = "data/effect_sizes/IRFs/",
                           ignore_failed_tests = FALSE
