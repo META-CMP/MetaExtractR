@@ -7,7 +7,9 @@
 #' @return Annualized shock size.
 #'
 #' @export
-adjust_shock_periodicity <- function (d) {
+adjust_shock_periodicity <- function (d, shock_size) {
+  
+  periodicity <- d$inttype
   
   if (grepl("_a_", periodicity) == TRUE) {
     

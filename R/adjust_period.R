@@ -11,6 +11,7 @@
 #'
 #' @export
 adjust_period <- function (d) {
+  
   if (d$month == TRUE & d$quarter == FALSE & d$annual == FALSE) {
     
     # If IRF data is already monthly, keep it:
