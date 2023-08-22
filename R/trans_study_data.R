@@ -79,9 +79,9 @@ source("R/adjust_period.R")
 
 study_data <- MetaExtractR::join_irf_json(
   key = "with_IRF",
-  jsonpath = "~/GitHub/MORPEP/META_CMP/toy_data_extraction_dev/data/JSON_files",
-  codebook_file = "~/GitHub/MORPEP/META_CMP/data/codebook.csv",
-  irf_folder_path = "~/GitHub/MORPEP/META_CMP/toy_data_extraction_dev/data/effect_sizes/IRFs/"
+  jsonpath = "data/JSON_files",
+  codebook_file = "codebook.csv",
+  irf_folder_path = "data/effect_sizes/IRFs/"
 )
 
 test <- trans_study_data(study_data)
