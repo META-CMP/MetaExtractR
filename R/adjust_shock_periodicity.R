@@ -25,7 +25,7 @@ adjust_shock_periodicity <- function (d, shock_size) {
   } else if (grepl("_m_", periodicity) == TRUE) {
     
     # If monthly periodicity, transform to annualized
-    shock_size <- ((1+(shock_size/10000))^12-1)*10000
+    shock_size <- ( (1 + (shock_size/10000) )^12 - 1)*10000
     
   }
   
