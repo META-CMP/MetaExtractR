@@ -51,8 +51,10 @@ get_shock_size <- function(d, study_data) {
         study_data$period == 1, ]
     # Store the scaling function
     axis_scaling_shock <- get_axis_scale(shock_row)$axis_scaling_function 
-    # Apply axis scaling to shock size
+    # Apply axis scaling to shock size (to percentage points)
     shock_size <- axis_scaling_shock(shock_size)
+    # Get basis points
+    shock_size <- shock_size*100
     
   }
   
