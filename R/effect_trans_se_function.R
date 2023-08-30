@@ -28,35 +28,51 @@ effect_trans_se_function <- function (d) {
   # Get confidence level and critical value
   conf_level <- get_conf_level(d)
   crit_val <- get_crit_val(conf_level)
-  
-  if (dep_code == "rate") {
     
-    # If outcome variable is "rate": TO DO: Which transformation in this case???
-    warning("rate not yet integrated")
-    # PLACEHOLDERs
-    d$CI.upper <- NA
-    d$mean.effect <- NA
-    d$CI.lower <- NA
-    d$SE.upper <- NA
-    d$SE.lower <- NA
-    
-  } else {
-    
-    if (case1 == TRUE | case4 == TRUE) { # CASE 1 or CASE 4
+    if (case1 == TRUE | case4 == TRUE | dep_code == "rate") { # CASE 1 or CASE 4 or "rate" as outcome variable
       
       # If case 1: Log-level of response variable and level of shock variable, non-cumulative
       # OR
       # If case 4: Log-difference or growth rate of response variable and level of shock variable, cumulative IRF
+      # OR 
+      # If outcome variable is "rate"
       
       # Step 1: Apply axis scaling function 
       d$CI.upper <- axis_scaling(d$CI.upper.raw)
       d$mean.effect <- axis_scaling(d$mean.effect.raw)
       d$CI.lower <- axis_scaling(d$CI.lower.raw)
-      # Standardize to effect of 1 percentage point shock
+      # Step 2: Periodicity consistency testing or adjustment
+      if (!(dep_code == "rate")) { # For CASE 1 and CASE 2
+        
+        # Periodicity error if periodicity of dep does not match with data_frequency
+        if ((grepl("_m_", dep_code) & d$month == FALSE) | (grepl("_q_", dep_code) & d$quarter == FALSE) | (grepl("_a_", dep_code) & d$annual == FALSE)) {
+          stop("Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency.")
+        }
+        
+      } else if (dep_code == "rate") { # For "rate"
+        
+        # If necessary, annualize effect size
+        if (grepl("_q_", shock_code) == TRUE) {
+          
+          # If quarterly periodicity, transform to annualized
+          d$CI.upper <- ( (1 + (d$CI.upper/100) )^4 - 1)*100
+          d$mean.effect <- ( (1 + (d$mean.effect/100) )^4 - 1)*100
+          d$CI.lower <- ( (1 + (d$CI.lower/100) )^4 - 1)*100
+          
+        } else if (grepl("_m_", shock_code) == TRUE) {
+          
+          # If monthly periodicity, transform to annualized
+          d$CI.upper <- ( (1 + (d$CI.upper/100) )^4 - 1)*100
+          d$mean.effect <- ( (1 + (d$mean.effect/100) )^12 - 1)*100
+          d$CI.lower <- ( (1 + (d$CI.lower/100) )^4 - 1)*100
+          
+        }
+      }
+      # Step 3: Standardize to effect of 1 percentage point shock
       d$CI.upper <- d$CI.upper / shock_size * 100
       d$mean.effect <- d$mean.effect / shock_size * 100
       d$CI.lower <- d$CI.lower / shock_size * 100
-      # Calculate the standard errors
+      # Step 4: Calculate the standard errors
       d$SE.upper <- abs(d$CI.upper - d$mean.effect) / crit_val
       d$SE.lower <- abs(d$CI.lower - d$mean.effect) / crit_val
 
@@ -100,9 +116,11 @@ effect_trans_se_function <- function (d) {
       d$SE.upper <- sqrt(sum(irf_until_h$SE.upper.raw^2))
       d$SE.lower <- sqrt(sum(irf_until_h$SE.lower.raw^2))
       
+    } else {
+      
+      stop("Transformation case not specified for specification of dep and inttype. Check specification in JSON.")
+      
     }
-    
-  }
   
   return(d)
   
