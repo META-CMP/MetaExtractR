@@ -32,10 +32,3 @@ adjust_shock_periodicity <- function (d, shock_size) {
   return(shock_size)
   
 }
-  
-# TO DO: 
-  # Comment ME: 
-  # but how to handle the interest rate response since this one should be
-  # multiplied by the same factor and not divided?
-  # -------------------------------------------------------------------------------
-    
