@@ -62,9 +62,9 @@ effect_trans_se_function <- function (d) {
         } else if (grepl("_m_", shock_code) == TRUE) {
           
           # If monthly periodicity, transform to annualized
-          d$CI.upper <- ( (1 + (d$CI.upper/100) )^4 - 1)*100
+          d$CI.upper <- ( (1 + (d$CI.upper/100) )^12 - 1)*100
           d$mean.effect <- ( (1 + (d$mean.effect/100) )^12 - 1)*100
-          d$CI.lower <- ( (1 + (d$CI.lower/100) )^4 - 1)*100
+          d$CI.lower <- ( (1 + (d$CI.lower/100) )^12 - 1)*100
           
         }
       }
@@ -118,7 +118,10 @@ effect_trans_se_function <- function (d) {
       
     } else {
       
-      stop("Transformation case not specified for specification of dep and inttype. Check specification in JSON.")
+      # TO DO: Check for other cases in the data and integrate them. 
+      # For example, when we have the unemployment rate as dependent, we will likely have a lev_q_une_rate case.
+      
+      stop("Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary.")
       
     }
   
