@@ -46,6 +46,7 @@ effect_trans_se_function <- function (d) {
         
         # Periodicity error if periodicity of dep does not match with data_frequency
         if ((grepl("_m_", dep_code) & d$month == FALSE) | (grepl("_q_", dep_code) & d$quarter == FALSE) | (grepl("_a_", dep_code) & d$annual == FALSE)) {
+          cat("Attempting effect size transformation and se approximation for", d$key, "model", d$model_id, d$outcome_var)
           stop("Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency.")
         }
         
