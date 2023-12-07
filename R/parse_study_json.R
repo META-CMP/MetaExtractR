@@ -25,8 +25,8 @@
 #' @examples 
 #' parse_study_json(
 #'  json_file = "dev_filled.json", 
-#'  json_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", 
-#'  codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.csv", 
+#'  json_path = "/Users/franzprante/GitHub/MORPEP/META_CMP/toy_data_extraction_dev/data/JSON_files", 
+#'  codebook = "/Users/franzprante/GitHub/MORPEP/META_CMP/data/codebook.csv", 
 #'  view_data = FALSE)
 #'
 #' @export

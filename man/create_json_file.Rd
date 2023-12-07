@@ -38,7 +38,7 @@ researcher ID to the generated JSON file.
 create_json_file(
  key = "dev", 
  rid = "fp", 
- folder_path = "/Users/franzprante/GitHub/MORPEP/META CMP/toy_data_extraction_dev/data/JSON_files", 
- codebook = "/Users/franzprante/GitHub/MORPEP/META CMP/data/codebook.csv")
+ folder_path = "/Users/franzprante/GitHub/MORPEP/META_CMP/toy_data_extraction_dev/data/JSON_files", 
+ codebook = "/Users/franzprante/GitHub/MORPEP/META_CMP/data/codebook.csv")
 
 }
