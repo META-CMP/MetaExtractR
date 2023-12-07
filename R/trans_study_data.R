@@ -34,28 +34,35 @@ trans_study_data <- function (study_data) {
 }
 # 
 # # dev test
-# # Load helper functions (only necessary in dev)
-source("R/adjust_period.R")
-source("R/adjust_shock_periodicity.R")
-source("R/create_json_file.R")
-source("R/get_axis_scale.R")
-source("R/get_conf_level.R")
-source("R/get_crit_val.R")
-source("R/effect_trans_se_function.R")
-source("R/get_shock_size.R")
-source("R/irf_csv_path.R")
-source("R/join_irf_json.R")
-source("R/parse_axis_scale_string.R")
-source("R/parse_study_json.R")
+# # # # Load helper functions (only necessary in dev)
+# source("R/adjust_period.R")
+# source("R/adjust_shock_periodicity.R")
+# source("R/create_json_file.R")
+# source("R/get_axis_scale.R")
+# source("R/get_conf_level.R")
+# source("R/get_crit_val.R")
+# source("R/effect_trans_se_function.R")
+# source("R/get_shock_size.R")
+# source("R/irf_csv_path.R")
+# source("R/join_irf_json.R")
+# source("R/parse_axis_scale_string.R")
+# source("R/parse_study_json.R")
+# 
+# study_data <- MetaExtractR::join_irf_json(
+#   key = "with_IRF",
+#   jsonpath = "data/JSON_files",
+#   codebook_file = "codebook.csv",
+#   irf_folder_path = "data/effect_sizes/IRFs/"
+# )
+# 
+# test <- trans_study_data(study_data)
 
-study_data <- MetaExtractR::join_irf_json(
-  key = "with_IRF",
-  jsonpath = "data/JSON_files",
-  codebook_file = "codebook.csv",
-  irf_folder_path = "data/effect_sizes/IRFs/"
-)
 
-test <- trans_study_data(study_data)
+
+
+
+
+
 
 
 
