@@ -1,5 +1,5 @@
 Package: MetaExtractR
-Version: 0.1.1
+Version: 0.1.2
 Date: 2023-06-21
 Title: Meta Study Data Extraction Management
 Description: Functions for data extraction management for our meta study.
@@ -8,4 +8,4 @@ Authors@R: c(person("Franz", "Prante", role = c("aut", "cre"),
               person("Matthias", "Enzinger", role = "ctb"))
 RoxygenNote: 7.2.3
 License: MIT + file LICENSE
-Imports: here, janitor, jsonlite
+Imports: here, janitor, jsonlite, data.table
