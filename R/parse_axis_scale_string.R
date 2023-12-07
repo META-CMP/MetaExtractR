@@ -22,7 +22,7 @@
 #' parse_axis_scale_string("y*(-1)")
 #' parse_axis_scale_string("y*-1") # Even some erroneous coding syntax (no parenthesis around "-1") is correctly parsed, but "y*- 1" would not work, for example.
 #' parse_axis_scale_string("y*0.01")
-#' parse_axis_scale_string("y* / 100") # Even some erroneous coding syntax (spaces around "/") is correctly parsed
+#' parse_axis_scale_string("y / 100") # Even some erroneous coding syntax (spaces around "/") is correctly parsed
 #' # Specific scaling for one variable
 #' parse_axis_scale_string("log_rgdp_y*100")
 #' parse_axis_scale_string("log_cpi_y/100")
