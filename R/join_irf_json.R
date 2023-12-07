@@ -76,6 +76,8 @@ join_irf_json <- function(key,
     # dep variable loop
     for (j in 1:length(dep)) {
       
+      message("Trying to merge IRF data of ", key, " model_", model, " ", dep[j])
+      
       # Select outcome variable
       outcome_var <- dep[j]
       
@@ -104,6 +106,14 @@ join_irf_json <- function(key,
       order_upper <- order(upper$period)
       upper <- upper[order_upper, ]
       
+      # Test that mean, upper, lower have same number of observations
+      n_obs_mean <- nrow(mean)
+      n_obs_upper <- nrow(upper)
+      n_obs_lower <- nrow(lower)
+      if ((n_obs_mean == n_obs_upper && n_obs_upper == n_obs_lower) == FALSE) {
+        stop("Check IRF data extraction in WebPlotDigitizer. Number of observations inconsistent: mean:", n_obs_mean, " upper:", n_obs_upper, " lower:", n_obs_lower)
+      }
+      
       # Create IRF dataframe for the dep variable
       dep_data <- data.frame(
         period = 1:nrow(mean), # This standardizes all periods for all studies such that the first period is always period 1.
@@ -118,6 +128,8 @@ join_irf_json <- function(key,
       
       # Clean up
       rm(upper, mean, lower, dep_data)
+      
+      message("Done.")
     }
     
     # rbind the dep-level dataframes
