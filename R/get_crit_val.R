@@ -20,6 +20,6 @@ get_crit_val <- function(confidence_level) {
   
   # Calculate the critical value
   crit_val <- abs( qnorm((1 - confidence_level) / 2) )
-  
+  crit_val <- round(crit_val, digits = 3)
   return(crit_val)
 }
