@@ -6,7 +6,7 @@
 #'
 #' @param name The name of the person to whom the IRF folders will be assigned. 
 #' If not specified, the function will stop with an error message.
-#' @param n The number of IRF folders to assign to the person. Default is 5.
+#' @param n_irfs The number of IRF folders to assign to the person. Default is 5.
 #' 
 #' @details The function first loads a list of already assigned IRFs from a CSV file. 
 #' It then retrieves the list of all current IRF folders and their corresponding JSON files. 
@@ -20,10 +20,10 @@
 #'
 #' @examples
 #' # Assign 5 IRF folders to a person named "John Doe"
-#' assign_irfs(name = "John Doe", n = 5)
+#' assign_irfs(name = "John Doe", n_irfs = 5)
 #'
 #' @export
-assign_irfs <- function (name = NULL, n = 5) {
+assign_irfs <- function (name = NULL, n_irfs = 5) {
   
   # Load list of assigned IRFs:
   library(readr)
@@ -48,7 +48,6 @@ assign_irfs <- function (name = NULL, n = 5) {
     stop("Name not specified. Please specify a person to assign to.")
   }
   person <- name # Who to assign to?
-  n_irfs <- 5 # How many new IRFs?
   new_assigned <- unassigned[1:n_irfs]
   d <- data.frame(
     irf = new_assigned,

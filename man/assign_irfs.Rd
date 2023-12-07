@@ -4,13 +4,13 @@
 \alias{assign_irfs}
 \title{Assign IRF Folders to a Person}
 \usage{
-assign_irfs(name = NULL, n = 5)
+assign_irfs(name = NULL, n_irfs = 5)
 }
 \arguments{
 \item{name}{The name of the person to whom the IRF folders will be assigned. 
 If not specified, the function will stop with an error message.}
 
-\item{n}{The number of IRF folders to assign to the person. Default is 5.}
+\item{n_irfs}{The number of IRF folders to assign to the person. Default is 5.}
 }
 \value{
 The function does not return a value but updates a CSV file with new assignments 
@@ -31,6 +31,6 @@ and the updated list is saved back to the CSV file.
 }
 \examples{
 # Assign 5 IRF folders to a person named "John Doe"
-assign_irfs(name = "John Doe", n = 5)
+assign_irfs(name = "John Doe", n_irfs = 5)
 
 }
