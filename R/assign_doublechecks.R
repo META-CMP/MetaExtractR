@@ -87,4 +87,3 @@ assign_doublechecks <- function (name = NULL, n_doublechecks = 10, weight=.001) 
   message("Done. Don't forget to push a commit and merge into main branch!")
   
 }
-
