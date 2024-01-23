@@ -2,6 +2,7 @@
 
 export(adjust_period)
 export(adjust_shock_periodicity)
+export(assign_irfs)
 export(create_json_file)
 export(effect_trans_se_function)
 export(final_join)

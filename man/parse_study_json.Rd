@@ -46,5 +46,4 @@ parse_study_json(
  codebook = "/Users/franzprante/GitHub/MORPEP/META_CMP/data/codebook.csv", 
  view_data = FALSE,
  ignore_failed_tests = FALSE)
-
 }
