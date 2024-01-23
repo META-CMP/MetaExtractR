@@ -8,7 +8,8 @@ parse_study_json(
   json_file,
   json_path,
   codebook = "codebook.csv",
-  view_data = TRUE
+  view_data = TRUE,
+  ignore_failed_tests = FALSE
 )
 }
 \arguments{
@@ -16,9 +17,14 @@ parse_study_json(
 
 \item{json_path}{The path to the JSON file to be parsed.}
 
-\item{codebook}{The path to the codebook csv file, with default value 'codebook.csv'.}
+\item{codebook}{The path to the codebook csv file, with default value 
+'codebook.csv'.}
 
-\item{view_data}{Logical indicating whether to view the resulting dataframe, with default TRUE.}
+\item{view_data}{Logical indicating whether to view the resulting dataframe, 
+with default TRUE.}
+
+\item{ignore_failed_tests}{A logical. If TRUE, the function will parse the 
+JSON despite failing consistency tests. Default is FALSE.}
 }
 \value{
 The function returns a dataframe with study data. Variables in the dataframe 
@@ -38,6 +44,6 @@ parse_study_json(
  json_file = "dev_filled.json", 
  json_path = "/Users/franzprante/GitHub/MORPEP/META_CMP/toy_data_extraction_dev/data/JSON_files", 
  codebook = "/Users/franzprante/GitHub/MORPEP/META_CMP/data/codebook.csv", 
- view_data = FALSE)
-
+ view_data = FALSE,
+ ignore_failed_tests = FALSE)
 }

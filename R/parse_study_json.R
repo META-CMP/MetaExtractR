@@ -8,8 +8,12 @@
 #'
 #' @param json_file The name of the JSON file to be parsed.
 #' @param json_path The path to the JSON file to be parsed.
-#' @param codebook The path to the codebook csv file, with default value 'codebook.csv'.
-#' @param view_data Logical indicating whether to view the resulting dataframe, with default TRUE.
+#' @param codebook The path to the codebook csv file, with default value 
+#'  'codebook.csv'.
+#' @param view_data Logical indicating whether to view the resulting dataframe, 
+#'  with default TRUE.
+#' @param ignore_failed_tests A logical. If TRUE, the function will parse the 
+#'  JSON despite failing consistency tests. Default is FALSE.
 #'
 #' @return The function returns a dataframe with study data. Variables in the dataframe 
 #'    correspond to variables in the JSON file and align with the codebook. Each row 
@@ -27,7 +31,8 @@
 #'  json_file = "dev_filled.json", 
 #'  json_path = "/Users/franzprante/GitHub/MORPEP/META_CMP/toy_data_extraction_dev/data/JSON_files", 
 #'  codebook = "/Users/franzprante/GitHub/MORPEP/META_CMP/data/codebook.csv", 
-#'  view_data = FALSE)
+#'  view_data = FALSE,
+#'  ignore_failed_tests = FALSE)
 #'
 #' @export
 parse_study_json <- 
@@ -35,7 +40,8 @@ parse_study_json <-
     json_file,
     json_path,
     codebook = "codebook.csv",
-    view_data = TRUE
+    view_data = TRUE,
+    ignore_failed_tests = FALSE
   ) {
     
     # Import the JSON file into R
@@ -56,7 +62,12 @@ parse_study_json <-
     # Check: Correct variable categories in JSON data?
     variable_categories <- unique(codebook$category)
     if (all(names(data) == variable_categories) != TRUE) {
-      stop("Corrupted variable category names in JSON data. Check for typos. Variable categories should align with the codebook.")
+      message <- "Corrupted variable category names in JSON data. Check for typos. Variable categories should align with the codebook."
+      if (ignore_failed_tests == FALSE) {
+        stop(message)
+      } else if (ignore_failed_tests == TRUE) {
+        message(message)
+      }
     }
     # Check: Correct variable names in JSON data?
     variable_names <- list()
@@ -64,16 +75,26 @@ parse_study_json <-
       variable_names[[category]] <- codebook[codebook$category == category,"variable"]
     }
     for (category in variable_categories) {
-      if (all(names(data[[category]]) == variable_names[[category]]) != TRUE) {
+      if (length(names(data[[category]])) != length(variable_names[[category]])) {
+        message("Number of variables of JSON file does not equal number of variables in codebook for the following category: ", category)
+        message("Check if some variables defined in the codebook are missing in the JSON file or if there are obsolete variables in the JSON file.")
+        message("Variables of ", category, " in JSON:")
+        print(names(data[[category]]))
+        message("Variables of ", category, " in codebook:")
+        print(variable_names[[category]])
+        if (ignore_failed_tests == FALSE) {
+          stop("Aborting.")
+        }
+      } else if (all(names(data[[category]]) == variable_names[[category]]) != TRUE) {
         error_vars <- names(data[[category]]) != variable_names[[category]]
         error_vars <- names( data[[category]][error_vars] )
-        message("Check these variable names for typos:")
+        message("Check these variable names for typos or obsolete entries:")
         print(error_vars)
-        stop("Corrupted variable names in JSON data.")
+        if (ignore_failed_tests == FALSE) {
+          stop("Corrupted variable names in JSON data.")
+        }
       }
     }
-    
-    # TO DO ADD: Transformations
     
     # Determine the number of models in the study data.
     number_of_models <- function (data) {
@@ -98,7 +119,12 @@ parse_study_json <-
           variable_data <- section_data[[variable]] # Select the variable
           if (all(names(variable_data) == paste0("model_", 1:num_models)) == FALSE) { # Test if numbers of models do not correspond for each variable.
             rm(study_df)
-            stop("Inconsistency in number of models or model_id in JSON data.")
+            message <- "Inconsistency in number of models or model_id in JSON data."
+            if (ignore_failed_tests == FALSE) {
+              stop(message)
+            } else if (ignore_failed_tests == TRUE) {
+                message(message)
+              } 
           }
           if (length(variable_data) > 1) {
             study_df[[variable]][model_id] <- variable_data[[model_id]] # Select the model specific value
@@ -115,12 +141,7 @@ parse_study_json <-
     if (view_data == TRUE) {
       View(study_df)
     }
+    message("Done. Consistency tests verified.")
     study_df
   }
 
-# parse_study_json(
-#   json_file = "dev.json",
-#   json_path = json_path,
-#   codebook = codebook,
-#   view_data = TRUE
-# )
