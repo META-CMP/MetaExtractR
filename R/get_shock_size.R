@@ -14,7 +14,7 @@
 #' shock_size <- get_shock_size(d, study_data)
 #'
 #' @export
-get_shock_size <- function(d, study_data) {
+get_shock_size <- function(d, study_data = study_data) {
   
   # Get shock entry for observation
   shock_size <- d$size
@@ -23,6 +23,11 @@ get_shock_size <- function(d, study_data) {
     
     # If basis point shock is directly available.
     shock_size <- as.double(sub("bp", "", shock_size))
+    
+  } else if (grepl("%", shock_size)) {
+    
+    # If % shock is available, transform to basis points
+    shock_size <- 100 * as.double(sub("%", "", shock_size))
     
   } else if (grepl("SD", shock_size) | is.na(shock_size)) { 
     
@@ -35,12 +40,6 @@ get_shock_size <- function(d, study_data) {
         study_data$model_id == d$model_id & 
         study_data$outcome_var == "rate" & 
         study_data$period == 1, "mean.effect.raw"]
-    
-    # TO DO: (maybe) 
-    # Effect size transformation necessary for shock size? 
-    # At the moment, we never code studies where the shock variable is not in levels. 
-    # Before final analyses of data, do final check if we changed this rule and add 
-    # transformation if so.
     
     # y-axis scaling function for the shock variable
     # Get the data for shock observation
@@ -56,10 +55,44 @@ get_shock_size <- function(d, study_data) {
     # Get basis points
     shock_size <- shock_size*100
     
+  } else {
+    stop('Shock size unclear. Check "size" in JSON')
   }
   
   return(shock_size)
   
 }
 
-  
+# TO DO 
+all.size <- as.data.frame(unique(all.json.test$size))
+# Problematic size entries create issue - create issue for this 
+# 15                         25
+# 63                         100bps
+# 45                         gr_q_rgdp
+
+# TO DO
+# all.inttype <- as.data.frame(unique(all.json.test$inttype))
+# Problematic inttype entries (no lev_ or no periodicity) - create issue for this 
+# 8                          lev_fed_funds
+# 11                        lev_short_rate
+# 13        12_month_government_bond_yield
+# 19                               lev_ssr
+# 27                             fed_funds
+# 29                        lev_1_year_gov
+# 51                          1_year_eonia
+# 52                         2_year_gov_de
+# 53                            1_year_gov
+# 57                       log_a_fed_funds
+# 64                           3_month_gov
+# 71                       short_term_rate
+# 81                             call_rate
+# 82                    overnight_callrate
+# 83                     3_month_interbank
+# 84                      commercial_paper
+# 85                           14_day_repo
+# 93                    3_month_eurodollar
+# 97                   lev_short_term_rate
+# 106                   lev_3_month_gov_us
+
+# TO DO
+# It is important that inttype and, if relevant, axis_trans in the JSON use the exact same inttype codes without typos. Otherwise, the axis transformation for the rate will fail or wrongly applied. See also the comment in get_axis_scale()

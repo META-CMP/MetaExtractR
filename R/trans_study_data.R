@@ -1,7 +1,20 @@
-# dev of standardization function and helper functions that is applied to a dataframe created with join_irf_json.R
-
-# Search for TO DO: in all related files. 
-
+#' Standardization and Effect Size Transformation of Study Coding and Effect Size Data
+#'
+#' This function standardizes and transforms study-level data obtained from JSON 
+#' and CSV files. It applies standardization to effect sizes and adjusts 
+#' time periods to align quarterly and annual data to a monthly format. The function 
+#' applies helper functions: `MetaExtractR::effect_trans_se_function()`, 
+#' `MetaExtractR::adjust_period`.
+#' 
+#'
+#' @param study_data A dataframe containing moderator variables and effect sizes. This data is typically created from JSON and CSV files via `MetaExtractR::join_irf_json()`.
+#' @return A dataframe where each observation has standardized effect sizes and adjusted periods. The structure of the returned dataframe is similar to the input, but with transformed values.
+#' @importFrom MetaExtractR join_irf_json
+#' @examples
+#' # Assuming 'raw_study_data' is a dataframe obtained from MetaExtractR::join_irf_json
+#' transformed_data <- trans_study_data(raw_study_data)
+#'
+#' @export
 
 trans_study_data <- function (study_data) {
   
@@ -32,33 +45,6 @@ trans_study_data <- function (study_data) {
   return(trans.data)
   
 }
-# 
-# # dev test
-# # # # Load helper functions (only necessary in dev)
-# source("R/adjust_period.R")
-# source("R/adjust_shock_periodicity.R")
-# source("R/create_json_file.R")
-# source("R/get_axis_scale.R")
-# source("R/get_conf_level.R")
-# source("R/get_crit_val.R")
-# source("R/effect_trans_se_function.R")
-# source("R/get_shock_size.R")
-# source("R/irf_csv_path.R")
-# source("R/join_irf_json.R")
-# source("R/parse_axis_scale_string.R")
-# source("R/parse_study_json.R")
-# 
-# study_data <- MetaExtractR::join_irf_json(
-#   key = "with_IRF",
-#   jsonpath = "data/JSON_files",
-#   codebook_file = "codebook.csv",
-#   irf_folder_path = "data/effect_sizes/IRFs/"
-# )
-# 
-# test <- trans_study_data(study_data)
-
-
-
 
 
 

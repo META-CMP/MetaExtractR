@@ -26,6 +26,11 @@ get_conf_level <- function (d) {
     # If conf_level matches "2_SE", set it to 95
     conf_level <- 95
     
+  } else if (grepl("3_SE", conf_level)) {
+    
+    # If conf_level matches "3_SE", set it to 99.7
+    conf_level <- 99.7
+    
   } else {
     
     # If conf_level does not match the above patterns, convert it to a numeric value
@@ -39,3 +44,18 @@ get_conf_level <- function (d) {
   return(conf_level)
   
 }
+
+# TO DO create issue
+# all.conf <- as.data.frame(unique(all.json.test$conf))
+
+# Problem entries: 
+# 6                     68 & 90
+# 10                        1SD
+# 11                    68 & 95
+# 12                       3_SE
+# 13                1_SE & 2_SE
+# 15                    80 & 90
+# 17                   1SE & 90
+# 18                     0.2_SE
+# 23                68, 90 & 95
+# 24                  90 & 1_SE

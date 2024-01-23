@@ -1,6 +1,6 @@
 Package: MetaExtractR
-Version: 0.1.2
-Date: 2023-06-21
+Version: 2.0.0
+Date: 2024-01-04
 Title: Meta Study Data Extraction Management
 Description: Functions for data extraction management for our meta study.
 Authors@R: c(person("Franz", "Prante", role = c("aut", "cre"),

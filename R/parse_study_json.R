@@ -13,7 +13,7 @@
 #' @param view_data Logical indicating whether to view the resulting dataframe, 
 #'  with default TRUE.
 #' @param ignore_failed_tests A logical. If TRUE, the function will parse the 
-#'  JSON despite failing consistency tests.
+#'  JSON despite failing consistency tests. Default is FALSE.
 #'
 #' @return The function returns a dataframe with study data. Variables in the dataframe 
 #'    correspond to variables in the JSON file and align with the codebook. Each row 
