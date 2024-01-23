@@ -9,7 +9,6 @@
 #'
 #' @param study_data A dataframe containing moderator variables and effect sizes. This data is typically created from JSON and CSV files via `MetaExtractR::join_irf_json()`.
 #' @return A dataframe where each observation has standardized effect sizes and adjusted periods. The structure of the returned dataframe is similar to the input, but with transformed values.
-#' @importFrom MetaExtractR join_irf_json
 #' @examples
 #' # Assuming 'raw_study_data' is a dataframe obtained from MetaExtractR::join_irf_json
 #' transformed_data <- trans_study_data(raw_study_data)
