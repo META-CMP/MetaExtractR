@@ -64,7 +64,7 @@ get_shock_size <- function(d, study_data = study_data) {
 }
 
 # TO DO 
-all.size <- as.data.frame(unique(all.json.test$size))
+# all.size <- as.data.frame(unique(all.json.test$size))
 # Problematic size entries create issue - create issue for this 
 # 15                         25
 # 63                         100bps
