@@ -6,12 +6,14 @@
 #' @param irf_path A string specifying the path to the folder containing IRF files. This parameter is used only if `only_json` is FALSE. Defaults to "data/effect_sizes/IRFs/".
 #' @param only_json A logical value. If TRUE, the function will process only the JSON files. If FALSE, it will also process the IRF files. Defaults to FALSE.
 #' @param ignore An optional vector of strings. Each string should be the key of a study that should be ignored during processing. If NULL, no studies are ignored. Defaults to NULL.
+#' @param starting_check_at An optional string of a specific study key. This study is the starting point of studies that should be looked at during processing. If NULL, no specific study is selected. Defaults to NULL. It is only possible to use study keys which are not part of the "ignore" vector. Otherwise the package will throw an error message.
+#' @param investigate An optional vector of strings. Each string should be the key of a study that should be looked at during processing. If NULL, no specific studies are selected. Defaults to NULL. It is only possible to use study keys which are not part of the "ignore" vector and are ranked below the potential "starting_check_at" study. Otherwise the package will throw an error message.
 #'
 #' @return A dataframe that consolidates information on study moderator variables, effect sizes and standard errors from all the processed studies.
 #'
 #' @export
 
-final_join <- function (json_path = "data/JSON_files", irf_path = "data/effect_sizes/IRFs/", only_json = FALSE, ignore = NULL) {
+final_join <- function (json_path = "data/JSON_files", irf_path = "data/effect_sizes/IRFs/", only_json = FALSE, ignore = NULL, starting_check_at=NULL, investigate = NULL) {
   
   # Get the keys of the files
   # List all JSON files in the folder
@@ -21,6 +23,17 @@ final_join <- function (json_path = "data/JSON_files", irf_path = "data/effect_s
   # Option to ignore specific studies
   if (is.null(ignore) == FALSE) {
     keys <- keys[!(keys %in% ignore)]
+  }
+  # Option to only look at studies starting from study x onward
+  if (is.null(starting_check_at) == FALSE) {
+    # create index for the starting element
+    starting_index <- which(keys == starting_check_at)
+    # Exclude elements until the starting element
+    keys <- keys[(starting_index):length(keys)]
+  }
+  # Option to investigate specific studies
+  if (is.null(investigate) == FALSE) {
+    keys <- keys[keys %in% investigate]
   }
   # Number of studies
   n_studies <- length(keys)
@@ -46,10 +59,10 @@ final_join <- function (json_path = "data/JSON_files", irf_path = "data/effect_s
     } else if (only_json == TRUE) { # Option to only join all the JSON data without IRFs
       # Parse JSON
       study_data <<- parse_study_json(json_file = paste0(keys[i], ".json"), 
-                                   json_path = json_path,
-                                   codebook = "codebook.csv",
-                                   view_data = FALSE,
-                                   ignore_failed_tests = FALSE)
+                                      json_path = json_path,
+                                      codebook = "codebook.csv",
+                                      view_data = FALSE,
+                                      ignore_failed_tests = FALSE)
     }
     
     # Add to final.data.list
