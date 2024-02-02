@@ -8,7 +8,9 @@ final_join(
   json_path = "data/JSON_files",
   irf_path = "data/effect_sizes/IRFs/",
   only_json = FALSE,
-  ignore = NULL
+  ignore = NULL,
+  starting_check_at = NULL,
+  investigate = NULL
 )
 }
 \arguments{
@@ -19,6 +21,10 @@ final_join(
 \item{only_json}{A logical value. If TRUE, the function will process only the JSON files. If FALSE, it will also process the IRF files. Defaults to FALSE.}
 
 \item{ignore}{An optional vector of strings. Each string should be the key of a study that should be ignored during processing. If NULL, no studies are ignored. Defaults to NULL.}
+
+\item{starting_check_at}{An optional string of a specific study key. This study is the starting point of studies that should be looked at during processing. If NULL, no specific study is selected. Defaults to NULL. It is only possible to use study keys which are not part of the "ignore" vector. Otherwise the package will throw an error message.}
+
+\item{investigate}{An optional vector of strings. Each string should be the key of a study that should be looked at during processing. If NULL, no specific studies are selected. Defaults to NULL. It is only possible to use study keys which are not part of the "ignore" vector and are ranked below the potential "starting_check_at" study. Otherwise the package will throw an error message.}
 }
 \value{
 A dataframe that consolidates information on study moderator variables, effect sizes and standard errors from all the processed studies.
