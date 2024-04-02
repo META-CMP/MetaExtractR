@@ -19,8 +19,8 @@ effect_trans_se_function <- function (d) {
   cum <- d$cum
   
   # Test that dep_code has correct prefix
-  if ((grepl("log_", dep_code) | grepl("gr_", dep_code) | grepl("logdiff_", dep_code) | grepl("lev_", dep_code)) == FALSE) {
-    stop('Check JSON "dep" entry for missing "log_", "gr_" or "logdiff".', d$key, " model_", d$model_id, " Outcome: ", d$outcome_var)
+  if ((grepl("log_", dep_code) | grepl("gr_", dep_code) | grepl("logdiff_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate") == FALSE) {
+    stop('Check JSON "dep" entry for missing "log_", "gr_", "logdiff, or "lev_".', d$key, " model_", d$model_id, " Outcome: ", d$outcome_var)
   }
   
   # Determine the case
@@ -148,7 +148,7 @@ effect_trans_se_function <- function (d) {
 }
 
 # def
-# d<-data.frame("inttype"="lev_a_short_term_rate","outcome_var"="logdiff_a_rgdp","cum"=FALSE)
-# d$month<- TRUE
-# d$quarter<- FALSE
+# d<-data.frame("inttype"="lev_a_fed_funds","outcome_var"="lev_q_une_rate","cum"=FALSE)
+# d$month<- FALSE
+# d$quarter<- TRUE
 # d$annual<- FALSE
