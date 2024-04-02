@@ -19,7 +19,7 @@ effect_trans_se_function <- function (d) {
   cum <- d$cum
   
   # Test that dep_code has correct prefix
-  if (grepl("log_", dep_code) & grepl("gr_", dep_code) & grepl("logdiff_", dep_code) == FALSE) {
+  if ((grepl("log_", dep_code) | grepl("gr_", dep_code) | grepl("logdiff_", dep_code)) == FALSE) {
     stop('Check JSON "dep" entry for missing "log_", "gr_" or "logdiff".', d$key, " model_", d$model_id, " Outcome: ", d$outcome_var)
   }
   
@@ -140,3 +140,6 @@ effect_trans_se_function <- function (d) {
   return(d)
   
 }
+
+# def
+# d<-data.frame("inttype"="lev_a_short_term_rate","outcome_var"="lev_m_rgdp","cum"=FALSE)
