@@ -50,7 +50,7 @@ effect_trans_se_function <- function (d) {
       # OR 
       # If case 5: level response variable if unemployment or employment rate is the response variable and level of shock variable, non-cumulative IRF
       # OR 
-      # If case 6: transformation does not matter if output gap is the response variable , non-cumulative IRF
+      # If case 6: If output gap is the response variable and level of the shock variable, non-cumulative IRF and irrespective of the transformation of the output gap. 
       # OR 
       # If outcome variable is "rate"
       
