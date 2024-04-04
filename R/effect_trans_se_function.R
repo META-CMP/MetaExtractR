@@ -51,7 +51,7 @@ if (grepl("log_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate") {
       # OR
       # If case 4: Log-difference or growth rate of response variable and level of shock variable, cumulative IRF
       # OR 
-      # If case 5: level response variable if unemployment or employment rate is the response variable and level of shock variable, non-cumulative IRF
+      # If case 5: level response variable if unemployment rate or employment rate is the response variable and level of shock variable, non-cumulative IRF
       # OR 
       # If case 6: transformation does not matter if output gap is the response variable , non-cumulative IRF
       # OR 
