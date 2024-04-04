@@ -22,7 +22,10 @@ effect_trans_se_function <- function (d) {
   if ((grepl("log_", dep_code) | grepl("gr_", dep_code) | grepl("logdiff_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate") == FALSE) {
     stop('Check JSON "dep" entry for missing "log_", "gr_", "logdiff, or "lev_".', d$key, " model_", d$model_id, " Outcome: ", d$outcome_var)
   }
-  
+# Set cumulative dummy FALSE for log or lev variables and if "rate" is outcome_var:
+if (grepl("log_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate") {
+       d$cum <- FALSE
+    }
   # Determine the case
   case1 <- grepl("log_", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code)
   case2 <- grepl("gr_", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code)
@@ -48,7 +51,7 @@ effect_trans_se_function <- function (d) {
       # OR
       # If case 4: Log-difference or growth rate of response variable and level of shock variable, cumulative IRF
       # OR 
-      # If case 5: level response variable if unemployment or employment rate is the response variable and level of shock variable, non-cumulative IRF
+      # If case 5: level response variable if unemployment rate or employment rate is the response variable and level of shock variable, non-cumulative IRF
       # OR 
       # If case 6: If output gap is the response variable and level of the shock variable, non-cumulative IRF and irrespective of the transformation of the output gap. 
       # OR 
@@ -147,8 +150,3 @@ effect_trans_se_function <- function (d) {
   
 }
 
-# def
-# d<-data.frame("inttype"="lev_a_fed_funds","outcome_var"="lev_q_une_rate","cum"=FALSE)
-# d$month<- FALSE
-# d$quarter<- TRUE
-# d$annual<- FALSE
