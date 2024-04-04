@@ -21,6 +21,10 @@ effect_trans_se_function <- function (d) {
   # Get specifications of shock and outcome variable
   shock_code <- d$inttype
   dep_code <- d$outcome_var
+  # Set cumulative dummy FALSE for log or lev variables and if "rate" is outcome_var:
+  if (grepl("log_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate") {
+    d$cum <- FALSE
+  }
   cum <- d$cum
   
   # Test that dep_code has correct prefix
