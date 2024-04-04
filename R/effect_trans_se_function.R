@@ -13,22 +13,29 @@
 #' @export
 effect_trans_se_function <- function (d) {
 
+  
   # Get specifications of shock and outcome variable
   shock_code <- d$inttype
   dep_code <- d$outcome_var
+  # Set cumulative dummy FALSE for log or lev variables and if "rate" is outcome_var:
+  if (grepl("log_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate") {
+    d$cum <- FALSE
+  }
   cum <- d$cum
   
   # Test that dep_code has correct prefix
-  if (grepl("log_", dep_code) & grepl("gr_", dep_code) & grepl("logdiff_", dep_code) == FALSE) {
-    stop('Check JSON "dep" entry for missing "log_", "gr_" or "logdiff".', d$key, " model_", d$model_id, " Outcome: ", d$outcome_var)
+  if ((grepl("log_", dep_code) | grepl("gr_", dep_code) | grepl("logdiff_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate") == FALSE) {
+    stop('Check JSON "dep" entry for missing "log_", "gr_", "logdiff, or "lev_".', d$key, " model_", d$model_id, " Outcome: ", d$outcome_var)
   }
   
   # Determine the case
-  case1 <- grepl("log_", dep_code) & grepl("lev_", shock_code) & cum == FALSE
-  case2 <- grepl("gr_", dep_code) & grepl("lev_", shock_code) & cum == FALSE
-  case3 <- grepl("logdiff_", dep_code) & grepl("lev_", shock_code)  & cum == FALSE
-  case4 <- grepl("logdiff_", dep_code) | grepl("gr_", dep_code) & grepl("lev_", shock_code)  & cum == TRUE
-  # TO DO add case 5 from issue 
+  case1 <- grepl("log_", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code)
+  case2 <- grepl("gr_", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code)
+  case3 <- grepl("logdiff_", dep_code) & grepl("lev_", shock_code)  & cum == FALSE & !grepl("rate", dep_code)
+  case4 <- (grepl("logdiff_", dep_code) | grepl("gr_", dep_code)) & grepl("lev_", shock_code)  & cum == TRUE & !grepl("rate", dep_code)
+  case5 <- grepl("rate", dep_code) & grepl("lev_", dep_code) & grepl("lev_", shock_code)  & cum == FALSE
+  case6 <- grepl("gap", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code)
+ 
   
   # Get y-axis transformation function
   axis_scaling <- get_axis_scale(d)$axis_scaling_function
@@ -40,11 +47,15 @@ effect_trans_se_function <- function (d) {
   conf_level <- get_conf_level(d)
   crit_val <- get_crit_val(conf_level)
     
-    if (case1 == TRUE | case4 == TRUE | dep_code == "rate") { # CASE 1 or CASE 4 or "rate" as outcome variable
+    if (case1 == TRUE | case4 == TRUE | case5 == TRUE | case6 == TRUE | dep_code == "rate") { # CASE 1, CASE 4, CASE 5, CASE 6 or "rate" as outcome variable
       
       # If case 1: Log-level of response variable and level of shock variable, non-cumulative
       # OR
       # If case 4: Log-difference or growth rate of response variable and level of shock variable, cumulative IRF
+      # OR 
+      # If case 5: level response variable if unemployment rate or employment rate is the response variable and level of shock variable, non-cumulative IRF
+      # OR 
+      # If case 6: If output gap is the response variable and level of the shock variable, non-cumulative IRF and irrespective of the transformation of the output gap. 
       # OR 
       # If outcome variable is "rate"
       
@@ -58,7 +69,7 @@ effect_trans_se_function <- function (d) {
         # Periodicity error if periodicity of dep does not match with data_frequency
         if ((grepl("_m_", dep_code) & d$month == FALSE) | (grepl("_q_", dep_code) & d$quarter == FALSE) | (grepl("_a_", dep_code) & d$annual == FALSE)) {
           cat("Attempting effect size transformation and se approximation for", d$key, "model", d$model_id, d$outcome_var)
-          stop("Transformation case 1 or case 2, but periodicity of outcome variable does not match with data_frequency. ")
+          warning("Transformation case 1, 4, 5, or 6, but periodicity of outcome variable does not match with data_frequency. ")
         }
         
       } else if (dep_code == "rate") { # For "rate" as response variable
@@ -140,3 +151,4 @@ effect_trans_se_function <- function (d) {
   return(d)
   
 }
+
