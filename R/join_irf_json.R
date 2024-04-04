@@ -135,6 +135,34 @@ join_irf_json <- function(key,
     # rbind the dep-level dataframes
     model_data[[i]] <- do.call(rbind, data_list)
     
+    # Automatic IRF checks
+    # IRF test: Check that for a specific model, the IRFs for all dependent variables have the same number of observations
+      # Step 1: Split the dataframe by 'outcome_var'
+      split_data <- split(model_data[[i]], model_data[[i]]$outcome_var)
+      # Step 2: Get the number of rows (i.e. periods) for each 'outcome_var'
+      periods_per_outcome_var <- lapply(split_data, nrow)
+      # Step 3: Check if all 'outcome_var' have the same number of periods
+      if (length(unique(periods_per_outcome_var)) != 1) {
+        stop("IRF test failed: Not all dep IRFs have the same number of periods. Check IRF extraction. ", key, " model_", i)
+      }
+    # IRF test: Check if less than 8 observations for quarterly data or less than 16 for monthly data
+      # Check for quarterly
+      if (unique(model_data[[i]]$quarter)) {
+        if (all(periods_per_outcome_var < 8)) {
+          warning("IRF test failed: Quarterly data with less than 8 observations. Check IRF extraction. ", key, " model_", i)
+        }
+      }
+      # Check for monthly
+      if (unique(model_data[[i]]$month)) {
+        if (all(periods_per_outcome_var < 16)) {
+          warning("IRF test failed: Monthly data with less than 16 observations. Check IRF extraction. ", key, " model_", i)
+        }
+      }
+    # IRF test: Check if upper>mean>lower for all periods of the IRF except the first period.
+      irf_upper_mean_lower_test <- model_data[[i]][model_data[[i]]$period != 1,]
+      if (!all(irf_upper_mean_lower_test$CI.lower.raw < irf_upper_mean_lower_test$mean.effect.raw & irf_upper_mean_lower_test$mean.effect.raw < irf_upper_mean_lower_test$CI.upper.raw)) {
+        warning("IRF test failed: lower < mean < upper not always true. Check IRF extraction. ", key, " model_", i)
+      }
   }
   
   # rbind the model-level dataframes
