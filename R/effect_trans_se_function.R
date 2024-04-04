@@ -150,8 +150,3 @@ if (grepl("log_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate") {
   
 }
 
-# def
-# d<-data.frame("inttype"="lev_a_fed_funds","outcome_var"="lev_q_une_rate","cum"=FALSE)
-# d$month<- FALSE
-# d$quarter<- TRUE
-# d$annual<- FALSE
