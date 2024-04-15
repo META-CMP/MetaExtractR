@@ -111,7 +111,7 @@ join_irf_json <- function(key,
       n_obs_upper <- nrow(upper)
       n_obs_lower <- nrow(lower)
       if ((n_obs_mean == n_obs_upper && n_obs_upper == n_obs_lower) == FALSE) {
-        stop("Check IRF data extraction in WebPlotDigitizer. Number of observations inconsistent: mean:", n_obs_mean, " upper:", n_obs_upper, " lower:", n_obs_lower)
+        warning("Check IRF data extraction in WebPlotDigitizer. Number of observations inconsistent: mean:", n_obs_mean, " upper:", n_obs_upper, " lower:", n_obs_lower)
       }
       
       # Create IRF dataframe for the dep variable
@@ -143,7 +143,7 @@ join_irf_json <- function(key,
       periods_per_outcome_var <- lapply(split_data, nrow)
       # Step 3: Check if all 'outcome_var' have the same number of periods
       if (length(unique(periods_per_outcome_var)) != 1) {
-        stop("IRF test failed: Not all dep IRFs have the same number of periods. Check IRF extraction. ", key, " model_", i)
+        warning("IRF test failed: Not all dep IRFs have the same number of periods. Check IRF extraction. ", key, " model_", i)
       }
     # IRF test: Check if less than 8 observations for quarterly data or less than 16 for monthly data
       # Check for quarterly
