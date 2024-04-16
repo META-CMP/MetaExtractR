@@ -111,7 +111,7 @@ join_irf_json <- function(key,
       n_obs_upper <- nrow(upper)
       n_obs_lower <- nrow(lower)
       if ((n_obs_mean == n_obs_upper && n_obs_upper == n_obs_lower) == FALSE) {
-        warning("Check IRF data extraction in WebPlotDigitizer. Number of observations inconsistent: mean:", n_obs_mean, " upper:", n_obs_upper, " lower:", n_obs_lower)
+        stop("Check IRF data extraction in WebPlotDigitizer. Number of observations inconsistent: mean:", n_obs_mean, " upper:", n_obs_upper, " lower:", n_obs_lower)
       }
       
       # Create IRF dataframe for the dep variable
