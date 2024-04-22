@@ -20,7 +20,7 @@ adjust_period <- function (d) {
   } else if (d$month == FALSE & d$quarter == TRUE & d$annual == FALSE) {
     
     # If IRF data is quarterly:
-    period.month <- d$period * 4
+    period.month <- d$period * 3
     
   } else if (d$month == FALSE & d$quarter == FALSE & d$annual == TRUE) {
     
