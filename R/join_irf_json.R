@@ -116,7 +116,7 @@ join_irf_json <- function(key,
       
       # Create IRF dataframe for the dep variable
       dep_data <- data.frame(
-        period = 1:nrow(mean), # This standardizes all periods for all studies such that the first period is always period 1. TO DO: discuss if we should use 0
+        period = 0:(nrow(mean)-1), # This standardizes all periods for all studies such that the shock period is always period 0
         CI.upper.raw = upper$upper,
         mean.effect.raw = mean$mean,
         CI.lower.raw = lower$lower,
