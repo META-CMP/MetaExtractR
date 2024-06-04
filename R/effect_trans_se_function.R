@@ -18,7 +18,7 @@ effect_trans_se_function <- function (d) {
   shock_code <- d$inttype
   dep_code <- d$outcome_var
   # Set cumulative dummy FALSE for log or lev variables and if "rate" is outcome_var:
-  if (grepl("log_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate") {
+  if (grepl("log_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate" | grepl("gap", dep_code)) {
     d$cum <- FALSE
   }
   cum <- d$cum
@@ -30,8 +30,8 @@ effect_trans_se_function <- function (d) {
   
   # Determine the case
   case1 <- grepl("log_", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code)
-  case2 <- grepl("gr_", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code)
-  case3 <- grepl("logdiff_", dep_code) & grepl("lev_", shock_code)  & cum == FALSE & !grepl("rate", dep_code)
+  case2 <- grepl("gr_", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code) & !grepl("gap", dep_code)
+  case3 <- grepl("logdiff_", dep_code) & grepl("lev_", shock_code)  & cum == FALSE & !grepl("rate", dep_code) & !grepl("gap", dep_code)
   case4 <- (grepl("logdiff_", dep_code) | grepl("gr_", dep_code)) & grepl("lev_", shock_code)  & cum == TRUE & !grepl("rate", dep_code)
   case5 <- grepl("rate", dep_code) & grepl("lev_", dep_code) & grepl("lev_", shock_code)  & cum == FALSE
   case6 <- grepl("gap", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code)
