@@ -39,7 +39,7 @@ get_shock_size <- function(d, study_data = study_data) {
       study_data$key == d$key & 
         study_data$model_id == d$model_id & 
         study_data$outcome_var == "rate" & 
-        study_data$period == 1, "mean.effect.raw"]
+        study_data$period == 0, "mean.effect.raw"]
     
     # y-axis scaling function for the shock variable
     # Get the data for shock observation
@@ -47,7 +47,7 @@ get_shock_size <- function(d, study_data = study_data) {
       study_data$key == d$key & 
         study_data$model_id == d$model_id & 
         study_data$outcome_var == "rate" & 
-        study_data$period == 1, ]
+        study_data$period == 0, ]
     # Store the scaling function
     axis_scaling_shock <- get_axis_scale(shock_row)$axis_scaling_function 
     # Apply axis scaling to shock size (to percentage points)

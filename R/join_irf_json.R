@@ -158,8 +158,8 @@ join_irf_json <- function(key,
           warning("IRF test failed: Monthly data with less than 16 observations. Check IRF extraction. ", key, " model_", i)
         }
       }
-    # IRF test: Check if upper>mean>lower for all periods of the IRF except the first period.
-      irf_upper_mean_lower_test <- model_data[[i]][model_data[[i]]$period != 1,]
+    # IRF test: Check if upper>mean>lower for all periods of the IRF except the shock period (=period 0).
+      irf_upper_mean_lower_test <- model_data[[i]][model_data[[i]]$period != 0,]
       if (!all(irf_upper_mean_lower_test$CI.lower.raw < irf_upper_mean_lower_test$mean.effect.raw & irf_upper_mean_lower_test$mean.effect.raw < irf_upper_mean_lower_test$CI.upper.raw)) {
         warning("IRF test failed: lower < mean < upper not always true. Check IRF extraction. ", key, " model_", i)
       }
