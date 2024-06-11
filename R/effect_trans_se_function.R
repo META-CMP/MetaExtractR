@@ -110,7 +110,7 @@ effect_trans_se_function <- function (d) {
       irf_until_h <- study_data[study_data$key == d$key & 
                                       study_data$model_id == d$model_id & 
                                       study_data$outcome_var == dep_code & 
-                                      study_data$period %in% 1:h, c("CI.upper.raw", "mean.effect.raw", "CI.lower.raw")]
+                                      study_data$period %in% 0:h, c("CI.upper.raw", "mean.effect.raw", "CI.lower.raw")]
       # Step 2: Apply axis-scaling function 
       irf_until_h <- axis_scaling(irf_until_h)
       # Additional adjustment step for CASE 3
