@@ -31,7 +31,7 @@
 parse_axis_scale_string <- function (axis_scale) {
   
   # Extract the numerical value of the multiplier or divisor
-  parameter <- as.numeric(stringr::str_extract(axis_scale, "-?\\d+(\\.\\d+)?"))
+  parameter <- as.numeric(stringr::str_extract(axis_scale, "(?<=y[/\\*])\\d+"))
   
   # Extract the operator (*, /, -)
   operator <- stringr::str_extract(axis_scale, "[*/]")
