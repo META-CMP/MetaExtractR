@@ -17,8 +17,8 @@ effect_trans_se_function <- function (d) {
   # Get specifications of shock and outcome variable
   shock_code <- d$inttype
   dep_code <- d$outcome_var
-  # Set cumulative dummy FALSE for log or lev variables and if "rate" is outcome_var:
-  if (grepl("log_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate") {
+  # Set cumulative dummy FALSE for log or lev variables as well as if output gap is the dependent variable and if "rate" is outcome_var:
+  if (grepl("log_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate" | grepl("gap", dep_code)) {
     d$cum <- FALSE
   }
   cum <- d$cum
@@ -30,8 +30,8 @@ effect_trans_se_function <- function (d) {
   
   # Determine the case
   case1 <- grepl("log_", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code)
-  case2 <- grepl("gr_", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code)
-  case3 <- grepl("logdiff_", dep_code) & grepl("lev_", shock_code)  & cum == FALSE & !grepl("rate", dep_code)
+  case2 <- grepl("gr_", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code) & !grepl("gap", dep_code) # if the dependent variable is the output gap the growth rate transformation is not appropriate.
+  case3 <- grepl("logdiff_", dep_code) & grepl("lev_", shock_code)  & cum == FALSE & !grepl("rate", dep_code) & !grepl("gap", dep_code) # if the dependent variable is the output gap the log diff transformation is not appropriate.
   case4 <- (grepl("logdiff_", dep_code) | grepl("gr_", dep_code)) & grepl("lev_", shock_code)  & cum == TRUE & !grepl("rate", dep_code)
   case5 <- grepl("rate", dep_code) & grepl("lev_", dep_code) & grepl("lev_", shock_code)  & cum == FALSE
   case6 <- grepl("gap", dep_code) & grepl("lev_", shock_code) & cum == FALSE & !grepl("rate", dep_code)
@@ -122,7 +122,7 @@ effect_trans_se_function <- function (d) {
       irf_until_h <- study_data[study_data$key == d$key & 
                                       study_data$model_id == d$model_id & 
                                       study_data$outcome_var == dep_code & 
-                                      study_data$period %in% 1:h, c("CI.upper.raw", "mean.effect.raw", "CI.lower.raw")]
+                                      study_data$period %in% 0:h, c("CI.upper.raw", "mean.effect.raw", "CI.lower.raw")]
       # Step 2: Apply axis-scaling function 
       irf_until_h <- axis_scaling(irf_until_h)
       # Additional adjustment step for CASE 3
