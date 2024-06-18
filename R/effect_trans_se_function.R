@@ -150,12 +150,6 @@ effect_trans_se_function <- function (d) {
       crit_val_90 <- qnorm(0.95)  # crit_val for 90% confidence interval
       crit_val_95 <- qnorm(0.975)  # crit_val for 95% confidence interval
       # Recalculate CI bounds
-      irf_until_h$approx.CI.lower_68 <- irf_until_h$mean.effect.raw - crit_val_68 * irf_until_h$SE.lower.raw
-      irf_until_h$approx.CI.upper_68 <- irf_until_h$mean.effect.raw + crit_val_68 * irf_until_h$SE.lower.raw
-      irf_until_h$approx.CI.lower_90 <- irf_until_h$mean.effect.raw - crit_val_90 * irf_until_h$SE.lower.raw
-      irf_until_h$approx.CI.upper_90 <- irf_until_h$mean.effect.raw + crit_val_90 * irf_until_h$SE.lower.raw
-      irf_until_h$approx.CI.lower_95 <- irf_until_h$mean.effect.raw - crit_val_95 * irf_until_h$SE.lower.raw
-      irf_until_h$approx.CI.upper_95 <- irf_until_h$mean.effect.raw + crit_val_95 * irf_until_h$SE.lower.raw
       # Step 6: Calculate cumulative sum of standardized effects, bounds and standard errors up to period h
       d$CI.upper <- sum(irf_until_h$CI.upper.raw)
       d$mean.effect <- sum(irf_until_h$mean.effect.raw)
