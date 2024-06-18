@@ -156,12 +156,12 @@ effect_trans_se_function <- function (d) {
       d$CI.lower <- sum(irf_until_h$CI.lower.raw)
       d$SE.upper <- sqrt(sum(irf_until_h$SE.upper.raw^2))
       d$SE.lower <- sqrt(sum(irf_until_h$SE.lower.raw^2))
-      d$approx.CI.upper_68 <- sum(irf_until_h$approx.CI.upper_68)
-      d$approx.CI.lower_68 <- sum(irf_until_h$approx.CI.lower_68)
-      d$approx.CI.upper_90 <- sum(irf_until_h$approx.CI.upper_90)
-      d$approx.CI.lower_90 <- sum(irf_until_h$approx.CI.lower_90)
-      d$approx.CI.upper_95 <- sum(irf_until_h$approx.CI.upper_95)
-      d$approx.CI.lower_95 <- sum(irf_until_h$approx.CI.lower_95)
+      d$approx.CI.lower_68 <- d$mean.effect - crit_val_68 * d$SE.lower
+      d$approx.CI.upper_68 <- d$mean.effect + crit_val_68 * d$SE.upper
+      d$approx.CI.lower_90 <- d$mean.effect - crit_val_90 * d$SE.lower
+      d$approx.CI.upper_90 <- d$mean.effect + crit_val_90 * d$SE.upper
+      d$approx.CI.lower_95 <- d$mean.effect - crit_val_95 * d$SE.lower
+      d$approx.CI.upper_95 <- d$mean.effect + crit_val_95 * d$SE.upper
       
     } else {
       
