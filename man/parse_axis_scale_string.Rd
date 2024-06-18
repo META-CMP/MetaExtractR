@@ -8,8 +8,8 @@ parse_axis_scale_string(axis_scale)
 }
 \arguments{
 \item{axis_scale}{A character string specifying the axis scaling, e.g., "y*100", "y/100".
-The string should contain a numerical value and an operator (* or /). The function
-can also handle some forms of erroneous syntax, such as "y*-1" (paranthesis missing) or "y* / 100" (inserted spaces).}
+The string should contain a numerical value and an operator (* or /). It is important 
+that the numerical value and the operator appear after a "y".}
 }
 \value{
 A list containing: axis_scaling_function: A function to apply the desired scaling on y-values.; 
@@ -27,13 +27,16 @@ parse_axis_scale_string("y/100")
 parse_axis_scale_string("y*(-1)")
 parse_axis_scale_string("y*-1") 
 # Even some erroneous coding syntax (no parenthesis around "-1") is correctly parsed, but "y*- 1" would not work, for example.
-parse_axis_scale_string("y*0.01")
+parse_axis_scale_string("FALSE")
+parse_axis_scale_string("y*0.01") 
 parse_axis_scale_string("y / 100") # Even some erroneous coding syntax (spaces around "/") is correctly parsed
 # Specific scaling for one variable
 parse_axis_scale_string("log_rgdp_y*100")
-parse_axis_scale_string("log_cpi_y/100")
+parse_axis_scale_string("lev_3_year_gov_y*100")
+parse_axis_scale_string("log_cpi_y*10")
 parse_axis_scale_string("log_rgdp_y*(-1)")
 parse_axis_scale_string("logdiff_ip_y*0.1")
 parse_axis_scale_string("log_rgdpy*100") # Even some erroneous coding syntax ( no "_" left of "y") is correctly parsed
+parse_axis_scale_string("lev_1_year_gov_y/(-100)")  
 
 }
