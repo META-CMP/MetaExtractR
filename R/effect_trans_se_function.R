@@ -99,11 +99,9 @@ effect_trans_se_function <- function (d) {
       d$SE.upper <- abs(d$CI.upper - d$mean.effect) / crit_val
       d$SE.lower <- abs(d$CI.lower - d$mean.effect) / crit_val
       # Step 5: # Recalculate approximate 68, 90 and 95 % confidence bounds (assuming normality) separately for upper and lower
-      # Calculate new confidence bounds for 68%, 90%, and 95% intervals
       crit_val_68 <- qnorm(0.84)  # crit_val for 68% confidence interval
       crit_val_90 <- qnorm(0.95)  # crit_val for 90% confidence interval
       crit_val_95 <- qnorm(0.975)  # crit_val for 95% confidence interval
-      # Recalculate CI bounds
       d$approx.CI.lower_68 <- d$mean.effect - crit_val_68 * d$SE.lower
       d$approx.CI.upper_68 <- d$mean.effect + crit_val_68 * d$SE.upper
       d$approx.CI.lower_90 <- d$mean.effect - crit_val_90 * d$SE.lower
@@ -144,18 +142,16 @@ effect_trans_se_function <- function (d) {
       # Step 4: Calculate standard errors
       irf_until_h$SE.upper.raw <- abs(irf_until_h$CI.upper.raw - irf_until_h$mean.effect.raw) / crit_val
       irf_until_h$SE.lower.raw <- abs(irf_until_h$CI.lower.raw - irf_until_h$mean.effect.raw) / crit_val
-      # Step 5: # Recalculate approximate 68, 90 and 95 % confidence bounds (assuming normality) separately for upper and lower
-      # Calculate new confidence bounds for 68%, 90%, and 95% intervals
-      crit_val_68 <- qnorm(0.84)  # crit_val for 68% confidence interval
-      crit_val_90 <- qnorm(0.95)  # crit_val for 90% confidence interval
-      crit_val_95 <- qnorm(0.975)  # crit_val for 95% confidence interval
-      # Recalculate CI bounds
-      # Step 6: Calculate cumulative sum of standardized effects, bounds and standard errors up to period h
+      # Step 5: Calculate cumulative sum of standardized effects, bounds and standard errors up to period h
       d$CI.upper <- sum(irf_until_h$CI.upper.raw)
       d$mean.effect <- sum(irf_until_h$mean.effect.raw)
       d$CI.lower <- sum(irf_until_h$CI.lower.raw)
       d$SE.upper <- sqrt(sum(irf_until_h$SE.upper.raw^2))
       d$SE.lower <- sqrt(sum(irf_until_h$SE.lower.raw^2))
+      # Step 6: # Recalculate approximate 68, 90 and 95 % confidence bounds (assuming normality) separately for upper and lower
+      crit_val_68 <- qnorm(0.84)  # crit_val for 68% confidence interval
+      crit_val_90 <- qnorm(0.95)  # crit_val for 90% confidence interval
+      crit_val_95 <- qnorm(0.975)  # crit_val for 95% confidence interval
       d$approx.CI.lower_68 <- d$mean.effect - crit_val_68 * d$SE.lower
       d$approx.CI.upper_68 <- d$mean.effect + crit_val_68 * d$SE.upper
       d$approx.CI.lower_90 <- d$mean.effect - crit_val_90 * d$SE.lower
