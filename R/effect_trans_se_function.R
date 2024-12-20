@@ -25,7 +25,7 @@ effect_trans_se_function <- function (d) {
   
   # Test that dep_code has correct prefix
   if ((grepl("log_", dep_code) | grepl("gr_", dep_code) | grepl("logdiff_", dep_code) | grepl("lev_", dep_code) | dep_code == "rate") == FALSE) {
-    stop('Check JSON "dep" entry for missing "log_", "gr_", "logdiff, or "lev_".', d$key, " model_", d$model_id, " Outcome: ", d$outcome_var)
+    stop('Check JSON "dep" entry for missing "log_", "gr_", "logdiff_", or "lev_".', d$key, " model_", d$model_id, " Outcome: ", d$outcome_var)
   }
   
   # Determine the case
