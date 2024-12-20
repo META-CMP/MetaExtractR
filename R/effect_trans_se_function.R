@@ -91,10 +91,16 @@ effect_trans_se_function <- function (d) {
           
         }
       }
-      # Step 3: Standardize to effect of 1 percentage point shock
+      # Step 3: Standardize to effect of contractionary 1 percentage point shock
       d$CI.upper <- d$CI.upper / shock_size * 100
       d$mean.effect <- d$mean.effect / shock_size * 100
       d$CI.lower <- d$CI.lower / shock_size * 100
+      # Swap CIs for originally expansionary shocks
+      if (shock_size < 0) {
+        tmp <- d$CI.upper
+        d$CI.upper <- d$CI.lower
+        d$CI.lower <- tmp
+      }
       # Step 4: Calculate the standard errors
       d$SE.upper <- abs(d$CI.upper - d$mean.effect) / crit_val
       d$SE.lower <- abs(d$CI.lower - d$mean.effect) / crit_val
@@ -138,6 +144,12 @@ effect_trans_se_function <- function (d) {
         
       } else { # If data frequency and periodicity align
         irf_until_h <- irf_until_h / shock_size * 100
+      }
+      # Swap CIs for originally expansionary shocks
+      if (shock_size < 0) {
+        tmp <- irf_until_h$CI.upper.raw
+        irf_until_h$CI.upper.raw <- irf_until_h$CI.lower.raw
+        irf_until_h$CI.lower.raw <- tmp
       }
       # Step 4: Calculate standard errors
       irf_until_h$SE.upper.raw <- abs(irf_until_h$CI.upper.raw - irf_until_h$mean.effect.raw) / crit_val
