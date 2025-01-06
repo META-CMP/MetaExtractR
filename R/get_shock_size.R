@@ -19,7 +19,7 @@ get_shock_size <- function(d, study_data = study_data) {
   # Get shock entry for observation
   shock_size <- d$size
   
-  if (grepl("bp", shock_size)) { 
+  if (grepl("bp", shock_size)) {
     
     # If basis point shock is directly available.
     shock_size <- as.double(sub("bp", "", shock_size))
