@@ -14,7 +14,7 @@
 - Individual files per study enable granular version control through Git
 - Clear documentation of all changes through commit history
 - Reduced risk of accidental data corruption
-- Support for hierarchical data structures (e.g., multiple models per study, ensuring _single-point-of-truth_ principle)
+- Support for hierarchical data structures (e.g., multiple models per study, ensuring [_single-point-of-truth_](https://en.wikipedia.org/wiki/Single_source_of_truth) principle)
 - Automated validation against a predefined codebook
 
 ## Key Features:
@@ -74,5 +74,8 @@ df <- MetaExtractR::parse_study_json("path/to/study.json")
 
 This function validates the JSON against your codebook and returns a dataframe where each row represents an effect size observation.
 
+> [!NOTE]
+>
+> You can look at the actual application of the package in our project to get a clearer picture of how it works. For example, you might want to look at the [codebook](https://github.com/META-CMP/data/blob/main/codebook.csv) and the [`JSON` files](https://github.com/META-CMP/data/tree/main/data/full_text_screening/JSON_files) from our research project.
 
 
