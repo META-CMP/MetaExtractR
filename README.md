@@ -1,9 +1,12 @@
-# MetaExtractR
-
 > [!NOTE]
+> # MetaExtractR
+> 
 > ## About:
 >
-> The `MetaExtractR` R package was developed for internal use in the [full text screening and data extraction phase](https://github.com/META-CMP/data?tab=readme-ov-file#full-text-screening) of our [meta-study on the macroeconomic effects of conventional monetary policy](https://github.com/META-CMP/data). We make the source code public for transparency and reproducibility purposes. Below, we provide guidance on the workflow. Feel free to get inspired or even adapt it for your own project.
+> The `MetaExtractR` R package was developed for internal use in the [full text screening and data extraction phase](https://github.com/META-CMP/data?tab=readme-ov-file#full-text-screening) of our [meta-study on the macroeconomic effects of conventional monetary policy](https://github.com/META-CMP/data). We make the source code public for transparency and reproducibility purposes. Below, we provide guidance on the workflow.
+
+> [!IMPORTANT]
+> Please note that in our research project, we extracted effect sizes from "impulse response functions" which usually implies multiple effect sizes across the periods of the response horizon for a single model. We also integrated the effect size standardization which is customized to the specific requirements of our meta-analysis project. These features will not work "out of the box" for your project. But some higher level functionality, like the creation of `JSON` files from a codebook may still be interesting for you. So while this package was developed and customized for our [specific research project]([data](https://github.com/META-CMP/data)), we welcome adaptations. Please feel free to get inspired or even fork the repository and modify it for your own meta-analysis needs.
 
 ## Overview:
 
@@ -13,6 +16,14 @@
 - Reduced risk of accidental data corruption
 - Support for hierarchical data structures (e.g., multiple models per study, ensuring _single-point-of-truth_ principle)
 - Automated validation against a predefined codebook
+
+## Key Features:
+
+- **Automated file generation**: Creates pre-structured JSON files based on your codebook
+- **Validation**: Ensures consistency between coded data and predefined variable definitions
+- **Multi-model support**: Handles studies with multiple specifications efficiently
+- **Data transformation**: Converts `JSON` with study coding and `csv` files with effect sizes to analysis-ready dataframes
+- **Error checking**: Provides clear error messages for coding inconsistencies
 
 ## Installation:
 
@@ -63,15 +74,5 @@ df <- MetaExtractR::parse_study_json("path/to/study.json")
 
 This function validates the JSON against your codebook and returns a dataframe where each row represents an effect size observation.
 
-## Key Features:
 
-- **Automated file generation**: Creates pre-structured JSON files based on your codebook
-- **Validation**: Ensures consistency between coded data and predefined variable definitions
-- **Multi-model support**: Handles studies with multiple specifications efficiently
-- **Data transformation**: Converts `JSON` with study coding and `csv` files with effect sizes to analysis-ready dataframes
-- **Error checking**: Provides clear error messages for coding inconsistencies
 
-## Usage:
-
-> [!IMPORTANT]
-> Please note that in our research project, we extracted effect sizes from "impulse response functions" which usually implies multiple effect sizes across the periods of the response horizon for a single model. We also integrated the effect size standardization which is customized to the specific requirements of our meta-analysis project. These features will not work "out of the box" for your project. But some higher level functionality, like the creation of `JSON` files from a codebook may still be interesting for you. So while this package was developed and customized for our [specific research project]([data](https://github.com/META-CMP/data)), we welcome adaptations. Please feel free to get inspired or even fork the repository and modify it for your own meta-analysis needs.
