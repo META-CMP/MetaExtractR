@@ -23,7 +23,7 @@
 - **Validation**: Ensures consistency between coded data and predefined variables
 - **Multi-model support**: Handles studies with multiple specifications efficiently
 - **Data transformation**: Converts `JSON` with study coding and `csv` files with effect sizes to analysis-ready dataframes
-- **Error checking**: Provides clear error messages for coding inconsistencies
+- **Error checking**: Provides error messages for coding inconsistencies
 
 ## Installation:
 
