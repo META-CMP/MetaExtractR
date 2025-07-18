@@ -78,4 +78,51 @@ This function validates the JSON against your codebook and returns a dataframe w
 >
 > You can look at the actual application of the package in our project to get a clearer picture of how it works. For example, you might want to look at the [codebook](https://github.com/META-CMP/data/blob/main/codebook.csv) and the [`JSON` files](https://github.com/META-CMP/data/tree/main/data/full_text_screening/JSON_files) from our research project.
 
+## How MetaExtractR Works:
 
+### Data Structure and Integration
+
+The package is designed around a two-component data structure:
+
+1. **Study metadata (JSON files)**: Contains all coded study characteristics, identification strategies, estimation methods, and model specifications
+2. **Effect size data (CSV files)**: Stores extracted impulse response functions with separate files for point estimates and confidence bounds
+
+### Core Functions and Processing Pipeline
+
+The package implements a hierarchical function structure centered around `final_join()`, which orchestrates the complete data processing workflow:
+
+#### 1. Data Parsing and Validation
+- `parse_study_json()`: Reads JSON files and validates them against the codebook structure, ensuring all required variables are present
+- Converts JSON's hierarchical structure (studies → models → variables) into a rectangular dataframe format
+
+#### 2. Effect Size Integration
+- `join_irf_json()`: Matches JSON data with corresponding IRF CSV files based on study keys and model identifiers
+- `irf_csv_path()`: Constructs file paths to locate the correct CSV files for each model and outcome variable
+
+#### 3. Effect Size Standardization
+The package implements transformations through `trans_study_data()` and its helper functions:
+
+- `effect_trans_se_function()`: Applies case-specific transformations based on how variables are defined in the original study (e.g., log levels vs. growth rates)
+- `get_shock_size()`: Extracts and standardizes the monetary policy shock size to 100 basis points
+- `adjust_shock_periodicity()`: Converts quarterly or monthly interest rate changes to annualized rates
+- `get_axis_scale()`: Parses axis transformation instructions to convert graph units to percentages
+- `get_conf_level()` and `get_crit_val()`: Determine confidence levels and calculate critical values for standard error approximation
+
+The package handles several transformation cases based on variable specifications. Each case applies transformations to ensure all effect sizes represent comparable percentage changes following a standardized monetary policy shock.
+
+#### 4. Standard Error Approximation
+For studies reporting only confidence intervals, the package approximates standard errors by:
+- Calculating the distance between confidence bounds and point estimates
+- Dividing by the appropriate critical value (e.g., 1.96 for 95% CI)
+- Handling asymmetric confidence intervals by calculating separate upper and lower standard errors
+
+### Error Handling and Validation
+
+The package provides informative error messages pinpointing specific studies and models when issues arise.
+
+### Output
+
+The final output is a unified dataframe where:
+- Each row represents one effect size at a specific response horizon
+- All effects are standardized to percentage changes from a 100 basis point contractionary shock
+- Standard errors are consistently approximated across different reporting formats
