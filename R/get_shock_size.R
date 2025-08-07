@@ -63,36 +63,4 @@ get_shock_size <- function(d, study_data = study_data) {
   
 }
 
-# TO DO 
-# all.size <- as.data.frame(unique(all.json.test$size))
-# Problematic size entries create issue - create issue for this 
-# 15                         25
-# 63                         100bps
-# 45                         gr_q_rgdp
-
-# TO DO
-# all.inttype <- as.data.frame(unique(all.json.test$inttype))
-# Problematic inttype entries (no lev_ or no periodicity) - create issue for this 
-# 8                          lev_fed_funds
-# 11                        lev_short_rate
-# 13        12_month_government_bond_yield
-# 19                               lev_ssr
-# 27                             fed_funds
-# 29                        lev_1_year_gov
-# 51                          1_year_eonia
-# 52                         2_year_gov_de
-# 53                            1_year_gov
-# 57                       log_a_fed_funds
-# 64                           3_month_gov
-# 71                       short_term_rate
-# 81                             call_rate
-# 82                    overnight_callrate
-# 83                     3_month_interbank
-# 84                      commercial_paper
-# 85                           14_day_repo
-# 93                    3_month_eurodollar
-# 97                   lev_short_term_rate
-# 106                   lev_3_month_gov_us
-
-# TO DO
-# It is important that inttype and, if relevant, axis_trans in the JSON use the exact same inttype codes without typos. Otherwise, the axis transformation for the rate will fail or wrongly applied. See also the comment in get_axis_scale()
+# WARNING It is important that inttype and, if relevant, axis_trans in the JSON use the exact same inttype codes without typos. Otherwise, the axis transformation for the rate will fail or wrongly applied. See also the comment in get_axis_scale()

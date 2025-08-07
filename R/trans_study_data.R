@@ -32,10 +32,6 @@ trans_study_data <- function (study_data) {
     # Adjust the period to match quarterly and annual with monthly data.
     d$period.month <- adjust_period(d)
 
-    # TO DO:
-    # If necessary, adjust the outcome variables (including rate) for annualization
-    # ... see the comment in adjust_shock_periodicity  (can this be done in the end?)
-
     trans.data <- rbind(trans.data, d)
 
   }

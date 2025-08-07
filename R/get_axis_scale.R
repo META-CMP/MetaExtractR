@@ -131,31 +131,9 @@ get_axis_scale <- function (d) {
   
 }
 
-
-# TO DO
-# all.axis_trans <- as.data.frame(unique(all.json.test$axis_trans))
-# Problematic cases in all.axis_trans: PUT THESE INTO NEW ISSUE AND MENTION THAT THEY NEED CORRECTION 
-# "y*10^(-3)"                                     # Double check these studies. These cases are either related to an axis scaling that should actually directly happen in the IRF extraction, or the syntax is used wrong (in this case, y*0.001 should have been used).
-# "log_q_rgdp_y*10^(-3) lev_q_une_rate_y*10^(-3)" # Double check these studies. These cases are either related to an axis scaling that should actually directly happen in the IRF extraction, or the syntax is used wrong (in this case, y*0.001 should have been used).
-# "y*100 lev_a_fed_funds_false leva_a_eonia_false"
-# "gr_q_cpi_y*10^(-3)"                            # Double check these studies. These cases are either related to an axis scaling that should actually directly happen in the IRF extraction, or the syntax is used wrong (in this case, y*0.001 should have been used).
-# "gr_m_deflator*10^(-3)"                         # Double check these studies. These cases are either related to an axis scaling that should actually directly happen in the IRF extraction, or the syntax is used wrong (in this case, y*0.001 should have been used).
-# "lev_q_une_rate_y*10^(-3)"                      # Double check these studies. These cases are either related to an axis scaling that should actually directly happen in the IRF extraction, or the syntax is used wrong (in this case, y*0.001 should have been used).
-# "log_q_rgdp*100"                                # no y
-# "false log_q_rgdp_y*100"
-# "y*0.001"                                       # double check, maybe related to scaling that should actually happen directly in IRF extraction.
-# "y*100 short_term_rate_false"                   # No lev, no periodicirty
-# "y*100 gr_a_cpi_false lev_a_short_term_false"   # check short_term vs. short_term_rate vs. short_rate
-# "y*100 call_rate_false"                         # no lev, no periodicity
-# "y*100 3_month_interbank_false"                 # no lev, no periodicity
-# "y*100 commercial_paper_false"                  # no lev, no periodicity
-# "y*100 14_day_repo_false"                       # no lev, no periodicity
-# "y*(-1)"                                        # correct?
-
-
-# TO DO
-# For this to work for every dep, it is extremely important that the correct dep or inttype codes have been used in the entries in axis_trans variable. A typo here will mean that the axis_trans will be wrong. 
-# How to test this? Probably, we need a test that all of elements of the axis_trans string are an "allowed" code, so we need to define the allowed codes firts, based on the existing dep and inttype entries. 
+# WARNING: For this to work for every dep, it is extremely important that the correct dep or inttype codes have been used in the entries in axis_trans variable. A typo here will mean that the axis_trans will be wrong. 
+# Potential for improvement: 
+# How to test this? Probably, we need a test that all of elements of the axis_trans string are an "allowed" code, so we need to define the allowed codes first, based on the existing dep and inttype entries. 
 # Here are the unique entries in dep
 # all.dep <- unique(all.json.test$dep)
 # all.dep <- as.character(all.dep)

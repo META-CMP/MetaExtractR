@@ -44,18 +44,3 @@ get_conf_level <- function (d) {
   return(conf_level)
   
 }
-
-# TO DO create issue
-# all.conf <- as.data.frame(unique(all.json.test$conf))
-
-# Problem entries: 
-# 6                     68 & 90
-# 10                        1SD
-# 11                    68 & 95
-# 12                       3_SE
-# 13                1_SE & 2_SE
-# 15                    80 & 90
-# 17                   1SE & 90
-# 18                     0.2_SE
-# 23                68, 90 & 95
-# 24                  90 & 1_SE
