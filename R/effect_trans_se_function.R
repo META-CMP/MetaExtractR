@@ -173,9 +173,8 @@ effect_trans_se_function <- function (d) {
       
     } else {
       
-      # TO DO: Check for other cases in the data and integrate them. 
-      # For example, when we have the unemployment rate as dependent, we will likely have a lev_q_une_rate case.
-      
+      # TO DO: Check for other cases in the data and integrate them.
+
       stop("Transformation case not specified for specification of dep and inttype. Check specification in JSON and update function if necessary. ", d$key, " model_", d$model_id, " Shock variable: ", d$inttype, " Outcome: ", d$outcome_var)
       
     }
